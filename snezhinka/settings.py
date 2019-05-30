@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
 
     'tinymce',
+    'smart_selects',
     'news',
     'landing',
     'products',
@@ -135,6 +136,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SITE_ID = 1
+
+# JQUERY_URL = True
+USE_DJANGO_JQUERY = True
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "table,spellchecker,paste,searchreplace",

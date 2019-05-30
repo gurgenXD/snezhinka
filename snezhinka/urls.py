@@ -10,6 +10,7 @@ admin.site.site_header = 'Снежинка'
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
+    path('chaining/', include('smart_selects.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
 ]

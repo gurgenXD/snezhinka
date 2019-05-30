@@ -3,6 +3,7 @@ from django.urls import reverse
 from slugify import slugify
 from tinymce.models import HTMLField
 import math
+from smart_selects.db_fields import ChainedForeignKey
 
 
 class Category(models.Model):
@@ -30,7 +31,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name='subcategories')
-    name = models.CharField(max_length=250, verbose_name='Название')
+    name = models.CharField(max_length=250, verbose_name='Название', unique=True)
 
     slug = models.SlugField(max_length=250, verbose_name='Slug', unique=True, help_text='Заполнится при сохранении')
     seo_title = models.CharField(max_length=250, verbose_name='Title', null=True, blank=True)
@@ -48,13 +49,13 @@ class SubCategory(models.Model):
         return "%s" % self.name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name + '-' + self.id)
+        self.slug = slugify(self.name)
         super(SubCategory, self).save(*args, **kwargs)
 
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, verbose_name='Подкатегория')
+    subcategory = ChainedForeignKey(SubCategory, chained_field='category', chained_model_field='category', show_all=False, auto_choose=True, sort=True, verbose_name='Подкатегория')
     name = models.CharField(max_length=250, verbose_name='Название')
     color = models.CharField(max_length=50, verbose_name='Цвет')
     features = models.CharField(max_length=250, verbose_name='Особенности')
@@ -80,7 +81,7 @@ class Product(models.Model):
         return '%s' % (self.name)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name + '-' + self.id)
+        self.slug = slugify(self.subcategory.name + '-' + self.name)
         super(Product, self).save(*args, **kwargs)
 
 
@@ -104,7 +105,7 @@ class Image(models.Model):
 
 
 class ProductSize(models.Model):
-    size = models.PositiveSmallIntegerField(verbose_name='Размер')
+    size = models.CharField(max_length=10, verbose_name='Размер')
 
     class Meta:
         verbose_name = 'Размер'
