@@ -1,5 +1,5 @@
 from django.contrib import admin
-from products.models import Product, Offer, Image, Category, SubCategory, ProductMaterial, ProductSize
+from products.models import Product, Offer, Image, Category, SubCategory, ProductMaterial, ProductSize, ProductType
 
 
 class OfferInline(admin.TabularInline):
@@ -16,11 +16,18 @@ class ImageInline(admin.TabularInline):
     classes = ('grp-collapse grp-closed',)
 
 
+class SubCategoryInline(admin.TabularInline):
+    model = SubCategory
+    extra = 0
+    readonly_fields = ('slug',)
+    classes = ('grp-collapse grp-closed',)
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('category', 'subcategory', 'name', 'description', 'features', 'color', 'vendor_code'),
+            'fields': ('product_type', 'category', 'subcategory', 'name', 'description', 'features', 'color', 'vendor_code'),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),
@@ -29,14 +36,16 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ('slug',)
-    inlines = (ImageInline, OfferInline,)
+    inlines = (ImageInline, OfferInline)
+    list_filter = ('product_type', 'category', 'subcategory')
+    list_display = ('name', 'product_type', 'category', 'subcategory')
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name',),
+            'fields': ('product_type', 'name', 'image'),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),
@@ -44,14 +53,32 @@ class CategoryAdmin(admin.ModelAdmin):
         }),
     )
 
+    inlines = (SubCategoryInline,)
     readonly_fields = ('slug',)
 
 
-@admin.register(SubCategory)
-class SubCategoryAdmin(admin.ModelAdmin):
+# @admin.register(SubCategory)
+# class SubCategoryAdmin(admin.ModelAdmin):
+#     fieldsets = (
+#         (None, {
+#             'fields': ('product_type', 'category', 'name',),
+#         }),
+#         ('SEO', {
+#             'classes': ('grp-collapse grp-closed',),
+#             'fields': ('slug', 'seo_title', 'desc', 'keywords'),
+#         }),
+#     )
+    
+#     list_display = ('name', 'category')
+#     list_filter = ('category',)
+#     readonly_fields = ('slug',)
+
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('category', 'name',),
+            'fields': ('name',),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),

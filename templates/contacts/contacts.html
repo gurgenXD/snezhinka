@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Контакты</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="h2 m-0 mb-5 font-weight-normal">Контакты</h1>
+    {% include 'contacts/__contact_info.html' %}
+</div>
+
+{% include 'contacts/__feedback_modal.html' %}
+
+{% endblock content %}

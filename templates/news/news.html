@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load imagefit %}
+
+{% block title %}
+    <title>Новости</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users_content' %}">Покупателям</a></li>
+            <li class="breadcrumb-item active">Новости</li>
+        </ol>
+        <h1 class="h2 m-0 mb-5 font-weight-normal">Новости</h1>
+        <div class="row">
+            {% for item in news %}
+                <div class="col-lg-6">
+                    <div class="newsfeed-item mb-5">
+                        <img src="{{ item.image.url|resize:'news_resize' }}" class="w-100 mb-3" alt="">
+                        <a href="{{ item.get_absolute_url }}" class="stretched-link font-2 mt-0 mb-2 h4 text-primary font-weight-normal d-block">{{ item.title }}</a>
+                        <p class="text-muted smaller mb-3">{{ item.short_desc }}</p>
+                        <span class="text-dark small d-block">{{ item.date|date:"j/n/Y" }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <nav class="pb-5">
+            <ul class="pagination justify-content-center pagination-sm">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock content %}

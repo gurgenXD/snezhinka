@@ -1,0 +1,210 @@
+{% load static %}
+
+<div class="bg-dark">
+    <div class="container d-lg-flex justify-content-between d-none pl-0">
+        <ul class="nav">
+            {% for item in main_points %}
+                <li class="nav-item">
+                    <a class="nav-link py-2 small font-weight-bold text-light
+                              {% if item.url == request.path %}active{% endif %}"
+                              href="{{ item.url }}">{{ item.title }}</a>
+                </li>
+            {% endfor %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle py-2 small font-weight-bold text-light
+                          {% if request.path == '/users_content/' %}active{% endif %}
+                          {% for item in drop_points %}
+                              {% if request.path == item.url %}active{% endif %}
+                          {% endfor %}
+                          {% if request.path == '/news/' %}active{% endif %}"
+                          href="{% url 'users_content' %}">Покупателям<i class="fas fa-chevron-down fa-xs ml-2"></i></a>
+                <div class="dropdown-menu shadow border-0">
+                    <a class="dropdown-item small
+                              {% if request.path == '/news/' %}active{% endif %}"
+                              href="{% url 'news' %}">Новости</a>
+                    {% for item in drop_points %}
+                        <a class="dropdown-item small
+                                  {% if item.url == request.path %}active{% endif %}"
+                                  href="{{ item.url }}">{{ item.title }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link py-2 small font-weight-bold text-light
+                          {% if request.path == '/contacts/' %}active{% endif %}"
+                          href="{% url 'contacts' %}">Контакты</a>
+            </li>
+        </ul>
+
+        <div>
+            <span class="navbar-text py-2 px-3 small font-weight-bold text-white">
+                <i class="fas fa-phone fa-sm mr-2 text-secondary"></i>{{ phone }}
+            </span>    
+            <a href="#" class="navbar-text py-2 px-3 small font-weight-bold text-white bg-primary" data-toggle="modal" data-target="#CallBackModal">
+                <i class="fas fa-headset mr-2"></i>заказать звонок
+            </a>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-lg-4 mb-4 mb-lg-0">
+    <div class="container px-3">
+        <button class="navbar-toggler is-mouse-focused" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse basis-100">
+            <form class="form-inline form-search">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-sm is-mouse-focused pr-4" placeholder="Поиск">
+                    <div class="input-group-append">
+                        <button class="btn btn-sm is-mouse-focused" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <a class="navbar-brand mx-auto" href="{% url 'index' %}">
+            <img src="{% static 'images/logo.png' %}" class="d-none d-lg-inline-block" alt="">
+            <img src="{% static 'images/logo-sm.png' %}" class="d-inline-block d-lg-none" alt="">
+        </a>
+
+        <div class="collapse navbar-collapse basis-100">
+            <ul class="nav navbar-nav ml-auto">
+
+
+                <li class="nav-item">
+                    <a class="nav-link smaller pl-0 pr-4" href="login.html">Войти</a>
+                </li>
+
+
+                <!--
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle smaller pl-0 pr-4" href="orders.html">
+                <i class="far fa-user text-primary mr-2"></i>Профиль
+                </a>
+                <div class="dropdown-menu shadow border-0">
+                <a class="dropdown-item small" href="orders.html">Мои заказы</a>
+                <a class="dropdown-item small" href="profile.html">Мои данные</a>
+                <hr class="my-2">
+                <a class="dropdown-item small" href="#">Выход</a>
+                </div>
+                </li>
+                -->
+
+                <li class="nav-item">
+                    <a class="nav-link smaller px-0" href="cart.html"><i class="fas fa-shopping-basket mr-2"></i>Корзина</a>
+                </li>
+            </ul>
+        </div>
+
+        <a class="smaller px-0 text-dark d-block d-lg-none" href="cart.html"><i class="fas fa-shopping-basket mr-2"></i>Корзина</a>
+
+        <div class="d-lg-none offcanvas-collapse">
+            <div class="container px-0 px-sm-3 pt-2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item d-flex justify-content-between">
+                        <a class="nav-link py-2 font-weight-bold smaller" href="tel:{{ phone }}">
+                            <i class="fas fa-phone fa-sm mr-2 text-primary"></i>{{ phone }}
+                        </a>
+
+                        <a class="nav-link py-2 small text-primary" href="#" data-toggle="modal" data-target="#CallBackModal">
+                            <i class="fas fa-headset mr-2"></i>заказать звонок
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link py-2 smaller" href="login.html"><i class="far fa-user text-primary mr-2"></i>Войти</a>
+                    </li>
+
+                    <!--
+                    <li class="nav-item mb-2">
+                    <a class="nav-link py-2 smaller" href="orders.html"><i class="far fa-user text-primary mr-2"></i>Профиль<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
+                    </li>
+                    -->
+
+                    <li class="nav-item pb-3">
+                        <form class="form-inline form-search">
+                            <div class="input-group w-100">
+                                <input type="text" class="form-control is-mouse-focused pr-4" placeholder="Поиск">
+                                <div class="input-group-append w-0">
+                                    <button class="btn btn-sm is-mouse-focused" type="button"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link py-2 smaller text-danger" href="catalogue-items.html">Скидки %</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-2 smaller" href="catalogue-items.html">Новинки</a>
+                    </li>
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link py-2 smaller" href="catalogue-categories.html">{{ category.name }}<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
+                        </li>
+                    {% endfor %}
+                    {% for item in main_points %}
+                        <li class="nav-item">
+                            <a class="nav-link py-2 smaller" href="{{ item.url }}">{{ item.title }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link py-2 smaller" href="{% url 'users_content' %}">Покупателям<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-2 smaller" href="{% url 'contacts' %}">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+<div class="bg-light d-none d-lg-block mb-5 sticky">
+    <div class="container px-0 position-relative">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link smaller text-dark" href="catalogue-items.html">
+                    Новинки
+                </a>
+            </li>
+            {% for item in product_types %}
+                <li class="nav-item dropdown dropdown-mega">
+                    <a class="nav-link dropdown-toggle smaller text-dark {% if item == product_type %}active{% endif %}" href="{{ item.get_absolute_url }}">
+                        {{ item.name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-mega-menu shadow border-0">
+                        <div class="row mb-4">
+                            {% for category in item.categories.all %}
+                                {% if not category.subcategories.all %}
+                                    <div class="col-4">
+                                        <a class="dropdown-item smaller" href="catalogue-items.html">{{ category.name }}</a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="row mb-4">
+                            {% for category in item.categories.all %}
+                                {% if category.subcategories.all %}
+                                    <div class="col-4">
+                                        <a class="dropdown-item smaller" href="catalogue-items.html"><strong>{{ category.name }}</strong></a>
+                                        {% for subcategory in category.subcategories.all %}
+                                            <a class="dropdown-item smaller" href="catalogue-items.html">{{ subcategory.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            <li class="nav-item">
+                <a class="nav-link smaller text-danger" href="catalogue-items.html">
+                    Скидки %
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

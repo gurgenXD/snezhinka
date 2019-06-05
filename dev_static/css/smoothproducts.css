@@ -1,0 +1,80 @@
+/* CSS for the loading div */
+
+.sp-loading {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+}
+
+/* Element wrapper */
+
+.sp-wrap {
+    display: none;
+    line-height: 0;
+    font-size: 0;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+/* Thumbnails */
+
+.sp-thumbs {
+    text-align: left;
+    display: inline-block;
+    margin-top: 5px;
+}
+.sp-thumbs img {
+    min-height: 64px;
+    min-width: 64px;
+    max-width: 64px;
+}
+.sp-thumbs a:link, .sp-thumbs a:visited {
+    width: 64px;
+    height: 64px;
+    margin-right: 5px;
+    overflow: hidden;
+    opacity: .5;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    -webkit-transition: all .1s ease-out;
+    transition: all .1s ease-out;
+}
+.sp-thumbs a:hover {
+    opacity: 1;
+}
+
+/* Styles for the currently selected thumbnail */
+
+.sp-thumbs a:active, .sp-current {
+    opacity: 1!important;
+    position: relative;
+}
+
+/* Image currently being viewed */
+
+.sp-large {
+    position: relative;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+.sp-large a img {
+    max-width: 100%;
+    height: auto;
+}
+.sp-large a {
+    display: block;
+}
+
+/* Panning Zoomed Image */
+
+.sp-zoom {
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+    display: none;
+}

@@ -1,0 +1,41 @@
+{% load static %}
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3">
+                <a href="{% url 'index' %}" class="pb-1 d-block" title=""><img src="{% static 'images/logo-sm.png' %}" alt=""></a>
+                <p class="small m-0">Магазин «Снежинка» © 2019</p>
+            </div>
+            <div class="col-xl-6">
+                <div class="row mt-3 mb-4 mt-xl-0 mb-xl-0">
+                    <div class="col-md-4">
+                        <ul class="list-unstyled m-0 p-0">
+                            <li><a href="/pages/payment/" class="small text-dark">Оплата</a></li>
+                            <li><a href="/pages/delivery/" class="small text-dark">Доставка</a></li>
+                            <li><a href="/pages/about/" class="small text-dark">О компании</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-unstyled m-0 p-0">
+                            <li><a href="{% url 'news' %}" class="small text-dark">Новости</a></li>
+                            <li><a href="/pages/choose-the-size/" class="small text-dark">Как подобрать размер</a></li>
+                            <li><a href="{% url 'contacts' %}" class="small text-dark">Контакты</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <a class="devlogo ml-xl-auto" href="http://wlms.info" target="_blank">
+                    <img src="{% static 'images/devlogo.png' %}" alt="...">
+                    <div class="devlogo-text">
+                        <span>Webline Masters</span>
+                        <span>создание и продвижение сайтов</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

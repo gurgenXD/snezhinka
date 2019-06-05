@@ -6,7 +6,7 @@ from news.models import News
 class NewsAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('title', 'image', 'text', 'is_active', 'date')
+            'fields': ('title', 'image', 'short_desc', 'text', 'is_active', 'date')
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),

@@ -2,17 +2,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from filebrowser.sites import site
 
 
 admin.site.site_header = 'Снежинка' 
 
 
 urlpatterns = [
+    path('admin/filebrowser/', site.urls),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('chaining/', include('smart_selects.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('pages/', include('django.contrib.flatpages.urls')),
+    path('imagefit/', include('imagefit.urls')),
+    path('', include('landing.urls')),
+    path('news/', include('news.urls')),
+    path('contacts/', include('contacts.urls')),
+    path('feedback/', include('feedback.urls')),
+    path('catalog/', include('products.urls')),
 ]
 
 

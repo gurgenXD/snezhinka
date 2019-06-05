@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-lg-4">
+        <address class="mb-5 mb-lg-0">
+            <ul class="list-unstyled addr-block">
+                <li class="mb-4">
+                    <span class="small text-muted d-block mb-1"><i class="fas fa-map-marker-alt fa-sm mr-2"></i>адрес</span>
+                    {% for item in addresses %}
+                        <p class="m-0 mb-1 font-2">{{ item.address }}</p>
+                    {% endfor %}
+                </li>
+                <li class="mb-4">
+                    <span class="small text-muted d-block mb-1"><i class="fas fa-phone fa-sm mr-2"></i>телефон</span>
+                    {% for item in phones %}
+                        <p class="m-0 mb-1 font-2">{{ item.phone }}</p>
+                    {% endfor %}
+                    <a href="#" class="navbar-text py-2 px-3 mt-2 small bg-dark text-light is-mouse-focused" data-toggle="modal" data-target="#CallBackModal">
+                        <i class="fas fa-headset mr-2"></i>заказать звонок
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <span class="small text-muted d-block mb-1"><i class="fas fa-fax fa-sm mr-2"></i>факс</span>
+                    {% for item in faxes %}
+                        <p class="m-0 mb-1 font-2">{{ item.fax }}</p>
+                    {% endfor %}
+                </li>
+                <li class="mb-4">
+                    <span class="small text-muted d-block mb-1"><i class="fas fa-envelope i-pre fa-sm mr-2"></i>электронная почта</span>
+                    {% for item in emails %}
+                        <p class="m-0 mb-1 font-2"><a href="mailto:{{ item.email }}">{{ item.email }}</a></p>
+                    {% endfor %}
+                </li>
+                <li class="mb-4">
+                    <span class="small text-muted d-block mb-1"><i class="fas fa-clock i-pre fa-sm mr-2"></i>режим работы</span>
+                    {% for item in shedules %}
+                        <p class="m-0 mb-1 font-2"><small class="mr-2">{{ item.days_point }}:</small>{{ item.time_point }}</p>
+                    {% endfor %}
+                </li>
+            </ul>
+            <a href="#" class="btn btn-outline-primary btn-sm font-2 is-mouse-focused" data-toggle="modal" data-target="#SendMessageModal"><i class="far fa-comment-dots mr-2"></i>напишите нам</a>
+        </address>
+    </div>
+
+    <div class="col-lg-8 mb-5">
+        {{ map_code|safe }}
+    </div>
+</div>

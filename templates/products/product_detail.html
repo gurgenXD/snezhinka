@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load imagefit %}
+
+{% block title %}
+    <title>Новости</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Главная</a></li>
+        <li class="breadcrumb-item"><a href="catalogue-categories.html">Церковные товары</a></li>
+        <li class="breadcrumb-item"><a href="catalogue-items.html">Камилавки и скуфьи</a></li>
+        <li class="breadcrumb-item active">Скуфья замшевая</li>
+    </ol>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="sp-loading mt-5">
+                <img src="{% static 'images/sp-loading.gif' %}" alt="">
+                <p>загрузка изображений</p>
+            </div>
+            <div class="sp-wrap mb-4 mb-lg-5">
+                {% for image in product.images.all %}
+                    <a href="{{ image.image.url|resize:'product_resize' }}"><img src="{{ image.image.url|resize:'product_medium_resize' }}" alt=""></a>
+                {% endfor %}
+            </div>
+        </div>            
+        <div class="col-lg-6">
+            <h1 class="h3 m-0 mb-lg-3 mb-2 font-weight-normal lh-15 ">{{ product.name }}</h1>
+            <div class="mb-4">
+                <span class="product-price h4 font-2 font-weight-normal text-muted mr-2"><del>4100</del></span>
+                <span class="product-price h3 font-2 text-danger">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                <!-- <span class="product-price h3 font-2 text-dark">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
+            </div>
+
+            <a href="#" class="btn btn-primary font-2 mb-3"><i class="fas fa-shopping-basket mr-3"></i>добавить в корзину</a>
+            <ul class="list-unstyled mb-5">
+                <div class="mb-4">
+                    <li class="py-2">
+                        <span class="d-block mb-1 smaller font-weight-bold">Размер:</span>
+                        <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
+                            {% for offer in product.offers.all %}
+                                <label class="btn btn-info mb-1">
+                                    <input type="radio" name="options" id="size1" autocomplete="off" checked>{{ offer.size.value }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </li>
+
+                    <li class="py-2">
+                        <span class="d-block mb-1 smaller font-weight-bold">Материал:</span>
+                        <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
+                            {% for offer in product.offers.all %}
+                                <label class="btn btn-info mb-1">
+                                    <input type="radio" name="options" id="material1" autocomplete="off" checked>{{ offer.material.material }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </div>
+
+                <li class="smaller text-muted mb-2"><p class="mb-3">{{ product.description|safe }}</p></li>
+                <li class="smaller text-muted mb-2">Особенности:<strong class="ml-2 text-dark">{{ product.features }}</strong></li>
+                <li class="smaller text-muted mb-2">Цвет:<strong class="ml-2 text-dark">{{ product.color }}</strong></li>
+                <li class="smaller text-muted mb-2">Артикул:<strong class="ml-2 text-dark">{{ product.vendor_code }}</strong></li>
+            </ul>
+        </div>            
+    </div>
+
+    <h1 class="h3 m-0 mb-4 mt-0 mt-lg-4 font-weight-normal">Вам могут понравится:</h1>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+            <div class="product-item mb-5 cp">
+                <img src="" class="w-100 product-item-img mb-2" alt="">
+                <div class="eq-h mb-2">
+                    <a href="product.html" class="stretched-link text-dark smaller">Скуфья с бортиком</a>
+                    <span class="d-block small text-muted">Камилавки и скуфьи</span>
+                </div>
+                <!--                            <span class="font-2 mr-2"><del>940</del></span>-->
+                <!--                            <span class="font-2 text-danger">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
+                <span class="font-2 text-dark">880<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

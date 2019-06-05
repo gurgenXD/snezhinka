@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        {% include '__head.html' %}
+
+        {% block title %}
+        {% endblock title %}
+    </head>
+    <body>
+        
+        {% include '__header.html' %}
+
+        {% block content %}
+        {% endblock content %}
+
+        <div class="modal fade" id="CallBackModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content overflow-hidden shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title m-0 font-weight-normal smaller" style="font-family:'Roboto">Оставьте номер, и мы перезвоним в ближайшее время</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" method="POST" action="{% url 'callback' %}" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ callback_form.phone }}
+                                <div class="invalid-feedback">
+                                    Это поле должно быть заполнено
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-sm mx-auto d-block font-2 is-mouse-focused" type="submit">заказать звонок</button>
+                        </form>
+
+                        <div class="alert alert-danger small mt-4 d-none" role="alert">
+                            <strong>Ошибка!</strong> Пожалуйста, обновите страницу и повторите попытку
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <p class="text-muted small m-0">Нажимая кнопку "заказать звонок", вы даёте согласие на <a href="agreement.html" target="_blank">обработку персональных данных</a></p>
+                    </div>
+
+                    <div class="modal-form-success">
+                        <button type="button" class="close close-all" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="text-center float-right">
+                            <i class="far fa-check-circle fa-5x text-primary"></i>
+                            <h4 class="font-weight-normal">Спасибо за заявку!</h4>
+                            <p class="m-0">Ожидайте звонка менеджера в ближайшее время</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-to-top"></div>
+
+        {% include '__footer.html' %}
+
+        {% include '__scripts.html' %}
+
+    </body>
+</html>

@@ -7,6 +7,7 @@ from tinymce.models import HTMLField
 
 class News(models.Model):
     title = models.CharField(max_length=250, unique=True, verbose_name='Название')
+    short_desc = models.CharField(max_length=250, verbose_name='Краткое описание')
     text = HTMLField(verbose_name='Текст')
     is_active = models.BooleanField(default=True, verbose_name='Показывать на сайте')
     date = models.DateField(default=date.today, verbose_name='Дата создания')
@@ -18,7 +19,7 @@ class News(models.Model):
 
     def get_picture_url(self, filename):
         ext = filename.split('.')[-1]
-        filename = '%s.%s' % (self.id, ext)
+        filename = '%s.%s' % (slugify(self.title), ext)
         return 'images/news/%s' % filename
 
     image = models.ImageField(upload_to=get_picture_url, verbose_name='Изображение')
@@ -28,12 +29,12 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        print(self.slug)
         super(News, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
+        ordering = ('date',)
 
     def __str__(self):
         return '%s' % self.title

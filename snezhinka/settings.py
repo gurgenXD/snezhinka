@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,11 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
 
+    'imagefit',
     'tinymce',
     'smart_selects',
+    'adminsortable2',
     'news',
     'landing',
     'products',
+    'contacts',
+    'feedback',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'snezhinka.urls'
@@ -73,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'landing.context_processors.header_info',
             ],
         },
     },
@@ -137,8 +144,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SITE_ID = 1
 
-# JQUERY_URL = True
+FILEBROWSER_DIRECTORY = ''
+DIRECTORY = ''
+
 USE_DJANGO_JQUERY = True
+
+IMAGEFIT_PRESETS = {
+    'news_resize': {'width': 690, 'height': 388, 'crop': True},
+    'category_resize': {'width': 280, 'height': 280, 'crop': True},
+    'product_list_resize': {'width': 240, 'height': 240, 'crop': True},
+    'product_resize': {'width': 1080, 'height': 1080, 'crop': True},
+    'product_medium_resize': {'width': 700, 'height': 700, 'crop': True},
+}
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "table,spellchecker,paste,searchreplace",
@@ -146,5 +163,14 @@ TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
     'height': 360,
-    'width': '60%',
+    'width': '758px',
 }
+
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcNnpAUAAAAAP8zDEOl2Erhj2F9bMPOjQza78Hb'
+
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'goga23d@gmail.com'
+EMAIL_HOST_PASSWORD = 'khysaqitvdnqtneg'
+# EMAIL_HOST_PASSWORD = '1111'

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ news_item.seo_title }}</title>
+    <meta name="description" content="{{ news_item.desc }}">
+    <meta name="keywords" content="{{ news_item.keywords }}"> 
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'users_content' %}">Покупателям</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'news' %}">Новости</a></li>
+                <li class="breadcrumb-item active">{{ news_item.title }}</li>
+            </ol>
+            <article class="mb-5">
+                <span class="d-inline-block text-light small bg-dark px-2 mb-2">{{ news_item.date|date:'d/n/Y' }}</span>
+                <h1 class="mt-0">{{ news_item.title }}</h1>
+                {{ news_item.text|safe }}
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Покупателям</title> 
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-10">
+                <h1 class="h2 m-0 mb-3 font-weight-normal">Покупателям</h1>
+                <ul class="list-unstyled">
+                    <li class="mb-1"><a href="{% url 'news' %}">Новости</a></li>
+                    {% for item in drop_points %}
+                        <li class="mb-1"><a href="{{ item.url }}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

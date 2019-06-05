@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load imagefit %}
+
+{% block title %}
+    <title>Новости</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="h2 m-0 mb-4 font-weight-normal">{{ product_type.name }}<small class="text-muted ml-2">{{ product_type.products.all|length }}</small></h1>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+            <div class="catalogue-menu mb-5">
+                {% for item in product_types %}
+                    <div class="catalogue-menu-group border-top">
+                        <a href="{{ item.get_absolute_url }}" class="font-weight-bolder text-uppercase small text-dark d-block py-3">{{ item.name }}<small class="text-muted ml-2">{{ item.products.all|length }}</small></a>
+                        {% if item == product_type %}
+                            <ul class="list-unstyled">
+                                {% for category_item in product_type.categories.all %}
+                                    <li>
+                                        {% if category_item.subcategories.all %}
+                                            <a href="{{ category_item.get_absolute_url }}" class="smaller text-dark d-block py-1 {% if category_item == category %}active{% endif %}">
+                                                {{ category_item.name }}<small class="text-muted ml-2">{{ category_item.products.all|length }}</small></a>
+                                        {% else %}
+                                            <a href="{{ category_item.get_cat_absolute_url }}" class="smaller text-dark d-block py-1">{{ category_item.name }}<small class="text-muted ml-2">{{ category_item.products.all|length }}</small></a>
+                                        {% endif %}
+                                        {% if category_item == category %}
+                                            <ul class="list-unstyled">
+                                                {% for subcategory in category_item.subcategories.all %}
+                                                    <li><a href="{{ subcategory.get_absolute_url }}" class="smaller text-dark d-block py-1">{{ subcategory.name }}<small class="text-muted ml-2">{{ subcategory.products.all|length }}</small></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-xl-9 col-lg-9">
+            <div class="row mb-4">
+                {% for subcategory in category.subcategories.all %}
+                    <div class="col-lg-6 col-md-6">
+                        <div class="category-item d-flex justify-content-start align-items-center pb-3 mb-3 justify-content-md-end align-items-md-center flex-md-column mb-md-4 pb-md-0 px-md-4 bg-cc">
+                            <img src="{{ subcategory.image.url|resize:'category_resize' }}" alt="" class="my-md-auto">
+                            <a href="{{ subcategory.get_absolute_url }}" class="stretched-link font-2 text-dark bg-white pl-3 pt-md-2 pb-md-0 px-md-3">{{ subcategory.name }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
