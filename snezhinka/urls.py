@@ -20,6 +20,7 @@ urlpatterns = [
     path('contacts/', include('contacts.urls')),
     path('feedback/', include('feedback.urls')),
     path('catalog/', include('products.urls')),
+    path('orders/', include('orders.urls')),
 ]
 
 

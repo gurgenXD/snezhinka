@@ -5,8 +5,9 @@ from products.models import Product, Offer, Image, Category, SubCategory, Produc
 class OfferInline(admin.TabularInline):
     model = Offer
     extra = 0
-    readonly_fields = ('purchased', 'price',)
-    fields = ('material', 'size', 'price_without_sale', 'sale', 'price', 'stock', 'purchased', 'is_active')
+    readonly_fields = ('material', 'size', 'purchased', 'price',)
+    can_delete = False
+    fields = ('material', 'size', 'price_without_sale', 'sale', 'price', 'stock', 'purchased')
     classes = ('grp-collapse grp-closed',)
 
 
@@ -27,7 +28,8 @@ class SubCategoryInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('product_type', 'category', 'subcategory', 'name', 'description', 'features', 'color', 'vendor_code'),
+            'fields': ('product_type', 'category', 'subcategory', 'name', 'price_without_sale', 'materials', 'sizes',
+            'description', 'features', 'color', 'vendor_code', 'is_active'),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),
@@ -38,7 +40,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('slug',)
     inlines = (ImageInline, OfferInline)
     list_filter = ('product_type', 'category', 'subcategory')
-    list_display = ('name', 'product_type', 'category', 'subcategory')
+    list_display = ('name', 'product_type', 'category', 'subcategory', 'is_active')
 
 
 @admin.register(Category)

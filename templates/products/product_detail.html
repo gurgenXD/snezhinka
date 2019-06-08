@@ -3,16 +3,17 @@
 {% load imagefit %}
 
 {% block title %}
-    <title>Новости</title>
+    <title>{{ product.seo_title }}</title>
+    <meta name="description" content="{{ product.desc }}">
+    <meta name="keywords" content="{{ product.keywords }}"> 
 {% endblock title %}
 
 {% block content %}
 <div class="container">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Главная</a></li>
-        <li class="breadcrumb-item"><a href="catalogue-categories.html">Церковные товары</a></li>
-        <li class="breadcrumb-item"><a href="catalogue-items.html">Камилавки и скуфьи</a></li>
-        <li class="breadcrumb-item active">Скуфья замшевая</li>
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ product.product_type.get_absolute_url }}">{{ product.product_type.name }}</a></li>
+        <li class="breadcrumb-item active">{{ product.name }}</li>
     </ol>
     <div class="row">
         <div class="col-lg-6">
@@ -28,36 +29,55 @@
         </div>            
         <div class="col-lg-6">
             <h1 class="h3 m-0 mb-lg-3 mb-2 font-weight-normal lh-15 ">{{ product.name }}</h1>
-            <div class="mb-4">
-                <span class="product-price h4 font-2 font-weight-normal text-muted mr-2"><del>4100</del></span>
-                <span class="product-price h3 font-2 text-danger">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
-                <!-- <span class="product-price h3 font-2 text-dark">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
+            <div class="product-price-div mb-4">
+                {% if product_price != product_price_without_sale %}
+                    <span class="product-price h4 font-2 font-weight-normal text-muted mr-2"><del>{{ product_price_without_sale }}</del></span>
+                    <span class="product-price h3 font-2 text-danger">{{ product_price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                {% else %}
+                    <span class="product-price h3 font-2 text-dark">{{ product_price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                {% endif %}
             </div>
-
-            <a href="#" class="btn btn-primary font-2 mb-3"><i class="fas fa-shopping-basket mr-3"></i>добавить в корзину</a>
+            <form action="{% url 'add_to_cart' %}" id="add-to-cart" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary font-2 mb-3" data-product-id="{{ product.id }}"><i class="fas fa-shopping-basket mr-3"></i>добавить в корзину</button>
+            </form>   
             <ul class="list-unstyled mb-5">
                 <div class="mb-4">
-                    <li class="py-2">
-                        <span class="d-block mb-1 smaller font-weight-bold">Размер:</span>
-                        <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
-                            {% for offer in product.offers.all %}
-                                <label class="btn btn-info mb-1">
-                                    <input type="radio" name="options" id="size1" autocomplete="off" checked>{{ offer.size.value }}
-                                </label>
-                            {% endfor %}
-                        </div>
-                    </li>
-
-                    <li class="py-2">
-                        <span class="d-block mb-1 smaller font-weight-bold">Материал:</span>
-                        <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
-                            {% for offer in product.offers.all %}
-                                <label class="btn btn-info mb-1">
-                                    <input type="radio" name="options" id="material1" autocomplete="off" checked>{{ offer.material.material }}
-                                </label>
-                            {% endfor %}
-                        </div>
-                    </li>
+                    <form action="{% url 'change_prop' %}" method="POST" id="product-prop-form" data-product-id="{{ product.id }}">
+                        {% csrf_token %}
+                        <li class="py-2">
+                            <span class="d-block mb-1 smaller font-weight-bold">Размер:</span>
+                            <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                {% for size in sizes %}
+                                    {% if size == first_size %}
+                                        <label class="size_button btn btn-info mb-1 active">
+                                            <input type="radio" name="options" value="{{ size }}" autocomplete="off">{{ size }}
+                                        </label>
+                                    {% else %}
+                                        <label class="size_button btn btn-info mb-1">
+                                            <input type="radio" name="options" value="{{ size }}" autocomplete="off">{{ size }}
+                                        </label>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="py-2">
+                            <span class="d-block mb-1 smaller font-weight-bold">Материал:</span>
+                            <div class="btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                {% for material in materials %}
+                                    {% if material == first_material %}
+                                        <label class="material_button btn btn-info mb-1 active">
+                                            <input type="radio" name="options" value="{{ material }}" autocomplete="off">{{ material }}
+                                        </label>
+                                    {% else %}
+                                        <label class="material_button btn btn-info mb-1">
+                                            <input type="radio" name="options" value="{{ material }}" autocomplete="off">{{ material }}
+                                        </label>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </form>
                 </div>
 
                 <li class="smaller text-muted mb-2"><p class="mb-3">{{ product.description|safe }}</p></li>
@@ -77,8 +97,8 @@
                     <a href="product.html" class="stretched-link text-dark smaller">Скуфья с бортиком</a>
                     <span class="d-block small text-muted">Камилавки и скуфьи</span>
                 </div>
-                <!--                            <span class="font-2 mr-2"><del>940</del></span>-->
-                <!--                            <span class="font-2 text-danger">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
+                <!--<span class="font-2 mr-2"><del>940</del></span>-->
+                <!--<span class="font-2 text-danger">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
                 <span class="font-2 text-dark">880<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
             </div>
         </div>

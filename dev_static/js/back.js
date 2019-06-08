@@ -65,5 +65,94 @@ $(document).ready(function(){
 		});
     });
 
-    
+    $('.size_button').click(function() {  // Изменение размера
+        product_id = $('#product-prop-form').data('product-id');
+        size_value = $(this).children('input').val();
+        material_value = $('.material_button.active input').val();
+        csrf_token = $('#product-prop-form [name="csrfmiddlewaretoken"]').val();
+
+		data = {
+            "csrfmiddlewaretoken": csrf_token,
+            product_id: product_id,
+            size_value: size_value,
+            material_value: material_value,
+        }
+
+        console.log(data)
+
+        $.ajax({
+        	type: "POST",
+        	url: $('#product-prop-form').attr('action'),
+        	data: data,
+            success: function(data) {
+                if (data.offer_price_without_sale == data.offer_price) {
+                    $('.product-price-div').html('<span class="product-price h3 font-2 text-dark">' + data.offer_price + '<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>')
+                } else {
+                    $('.product-price-div').html('<span class="product-price h4 font-2 font-weight-normal text-muted mr-2"><del>' + data.offer_price_without_sale +
+                                                 '</del></span><span class="product-price h3 font-2 text-danger">' + data.offer_price +
+                                                 '<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>')
+                }
+        	}
+        });
+    });
+
+    $('.material_button').click(function() { // Изменение материала
+        product_id = $('#product-prop-form').data('product-id');
+        material_value = $(this).children('input').val();
+        size_value = $('.size_button.active input').val();
+        csrf_token = $('#product-prop-form [name="csrfmiddlewaretoken"]').val();
+
+		data = {
+            "csrfmiddlewaretoken": csrf_token,
+            product_id: product_id,
+            size_value: size_value,
+            material_value: material_value,
+        }
+
+        console.log(data)
+        
+        $.ajax({
+        	type: "POST",
+        	url: $('#product-prop-form').attr('action'),
+        	data: data,
+            success: function(data) {
+                if (data.offer_price_without_sale == data.offer_price) {
+                    $('.product-price-div').html('<span class="product-price h3 font-2 text-dark">' + data.offer_price + '<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>')
+                } else {
+                    $('.product-price-div').html('<span class="product-price h4 font-2 font-weight-normal text-muted mr-2"><del>' + data.offer_price_without_sale +
+                                                 '</del></span><span class="product-price h3 font-2 text-danger">' + data.offer_price +
+                                                 '<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>')
+                }
+        	}
+        });
+    });
+
+    $('#add-to-cart button').click(function(e) { // Добавить в корзину
+        e.preventDefault();
+
+        product_id = $('#add-to-cart button').data('product-id');
+        material_value = $('.material_button.active input').val();
+        size_value = $('.size_button.active input').val();
+        csrf_token = $('#add-to-cart [name="csrfmiddlewaretoken"]').val();
+
+		data = {
+            "csrfmiddlewaretoken": csrf_token,
+            product_id: product_id,
+            material_value: material_value,
+            size_value: size_value,
+        }
+
+        console.log(product_id, size_value, material_value)
+        
+        $.ajax({
+        	type: "POST",
+        	url: $('#add-to-cart').attr('action'),
+        	data: data,
+            success: function(data) {
+                $('.cart-len').html(data.cart_len);
+                // $('.add-to-cart').css('display','none');
+                // $('.in-cart').css('display','block');
+        	}
+        });
+    });
 });
