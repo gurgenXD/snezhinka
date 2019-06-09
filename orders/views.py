@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from orders.cart import Cart
 from products.models import Product, ProductSize, ProductMaterial, Offer
+from contacts.models import Phone, Schedule, Address, MapCode
 
 
 class CartView(View):
@@ -75,3 +76,20 @@ class ChangeQuantityView(View):
         }
 
         return JsonResponse(context)
+
+
+class CarAddresstView(View):
+    def get(self, request):
+        phones = Phone.objects.all()
+        shedules = Schedule.objects.all()
+        addresses = Address.objects.all()
+        map_code = MapCode.objects.first()
+
+        context = {
+            'phones': phones,
+            'shedules': shedules,
+            'addresses': addresses,
+            'map_code': map_code,
+        }
+
+        return render(request, 'orders/cart_address.html', context)

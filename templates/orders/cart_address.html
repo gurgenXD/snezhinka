@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load imagefit %}
+
+{% block title %}
+    <title>Корзина</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="h2 m-0 mb-1 font-weight-normal">Способ получения заказа</h1>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2 active" data-toggle="tab" href="#Stock">Самовывоз</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2" data-toggle="tab" href="#Delivery">Доставка</a>
+        </li>
+    </ul>
+    <div class="tab-content pt-4">
+        <div class="tab-pane fade show active" id="Stock">
+            <form class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <p class="mb-3">Мы сообщим вам когда заказ будет доступен для самовывоза</p>
+                        <p class="text-muted small mb-3">Заполняя данную форму, вы даёте согласие на <a href="agreement.html" target="_blank">обработку персональных данных</a></p>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Ваш E-mail" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="+7 *** *** ** **" id="ConsumerStockPhone" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+
+                        <address class="pt-2 mb-lg-0">
+                            <ul class="list-unstyled addr-block">
+                                <li class="mb-3">
+                                    <span class="small text-muted d-block mb-1"><i class="fas fa-map-marker-alt fa-sm mr-2"></i>адрес</span>
+                                    {% for item in addresses %}
+                                        <p class="m-0 mb-1 font-2 smaller">{{ item.address }}</p>
+                                    {% endfor %}
+                                </li>
+                                <li class="mb-3">
+                                    <span class="small text-muted d-block mb-1"><i class="fas fa-phone fa-sm mr-2"></i>телефон</span>
+                                    {% for item in phones %}
+                                        <p class="m-0 mb-1 font-2 smaller">{{ item.phone }}</p>
+                                    {% endfor %}
+                                </li>
+                                <li class="mb-3">
+                                    <span class="small text-muted d-block mb-1"><i class="fas fa-clock i-pre fa-sm mr-2"></i>режим работы</span>
+                                    {% for item in shedules %}
+                                        <p class="m-0 mb-1 font-2 smaller"><small class="mr-2">{{ item.days_point }}:</small>{{ item.time_point }}</p>
+                                    {% endfor %}
+                                </li>
+                            </ul>
+                        </address>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 d-md-block d-none">
+                        {{ map_code.map_code|safe }}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between pt-5 pb-5">
+                    <a href="cart.html" class="btn btn-dark btn-sm font-2"><i class="fas fa-chevron-left fa-sm mr-3"></i>назад</a>
+                    <button class="btn btn-primary btn-sm font-2" type="submit"><i class="fas fa-check mr-2"></i>оформить заказ</button> <!-- Ведёт на cart-success.html (этот коммент надо удалить из кода страницы)-->
+                </div>
+            </form>
+
+        </div>
+        <div class="tab-pane fade" id="Delivery">
+            <form class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Ваш E-mail" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="+7 *** *** ** **" id="ConsumerDeliveryPhone" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Фамилия Имя Отчество" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Почтовый индекс" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Россия" disabled>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Регион / Область" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Город / Населённый пункт" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Улица, дом, квартира / офис" required>
+                            <div class="invalid-feedback">
+                                Это поле должно быть заполнено
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <p class="text-muted">Сообщите свои данные для доставки. После оформления заказа с вами свяжется менеджер для проверки данных и уточнения деталей заказа</p>
+                        <p class="text-danger small">Стоимость доставки не входит в сумму заказа и рассчитывается отдельно после оформления заказа на сайте</p>
+                        <p class="text-muted small m-0">Заполняя данную форму, вы даёте согласие на <a href="agreement.html" target="_blank">обработку персональных данных</a></p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between pt-4 pb-5">
+                    <a href="cart.html" class="btn btn-dark btn-sm font-2"><i class="fas fa-chevron-left fa-sm mr-3"></i>назад</a>
+                    <button class="btn btn-primary btn-sm font-2" type="submit"><i class="fas fa-check mr-2"></i>оформить заказ</button> <!-- Ведёт на cart-success.html (этот коммент надо удалить из кода страницы)-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
