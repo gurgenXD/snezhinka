@@ -124,8 +124,6 @@ class Product(models.Model):
     subcategory = ChainedForeignKey(SubCategory, chained_field='category', chained_model_field='category', show_all=False, auto_choose=True, sort=True, verbose_name='Подкатегория', related_name='products', null=True, blank=True)
     name = models.CharField(max_length=250, verbose_name='Название')
     price_without_sale = models.PositiveIntegerField(default=0, verbose_name='Цена без скидки')
-    # sale = models.PositiveIntegerField(default=0, verbose_name='Скидка')
-    # price = models.PositiveIntegerField(default=0, verbose_name='Цена со скидкой', help_text='Заполнится при сохранении')
     materials = models.CharField(max_length=250, verbose_name='Материалы', default='', help_text='Пример: Кожа, Хлопок')
     sizes = models.CharField(max_length=250, verbose_name='Размеры', default='', help_text='Пример: 43, 44')
     color = models.CharField(max_length=50, verbose_name='Цвет')
@@ -158,22 +156,6 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.category.name + '-' + self.name)
-        # self.price = math.ceil(self.price_without_sale * (1 - self.sale / 100))
-
-        # if not self.pk:
-        #     Offer.objects.filter(product=self).delete()
-        #     materials = self.materials.replace(',', '').split()
-        #     sizes = self.sizes.replace(',', '').split()
-
-        #     for size in sizes:
-        #         for material in materials:
-        #             Offer.objects.create(
-        #                 product = self.id,
-        #                 material = material,
-        #                 size = size,
-        #                 price_without_sale = self.price_without_sale,
-        #             )
-        
         super(Product, self).save(*args, **kwargs)
 
 

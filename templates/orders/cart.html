@@ -9,29 +9,33 @@
 <div class="container">
     <h1 class="h2 m-0 mb-4 font-weight-normal">Корзина</h1>
     {% for item in cart %}
-        <div class="cart-item mb-4">
+        <div class="cart-item cart-item-{{ item.offer_id }} mb-4">
             <div class="row">
                 <div class="col-lg-8 col-md-6 col-12">
                     <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
-                        <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                        <img src="{{ item.offer_image_url.url }}" alt="" class="mr-3">
                         <div>
-                            <a href="product.html" class="stretched-link text-dark font-2">Коврик универсальный</a>
-                            <span class="d-block small text-muted">250х100, овчина</span>
+                            <a href="{{ item.offer_get_absolute_url }}" class="stretched-link text-dark font-2">{{ item.offer_name }}</a>
+                            <span class="d-block small text-muted">{{ item.offer_size }}, {{ item.offer_material }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
-                    <input class="font-2" type="number" value="1" min="1" max="100" step="1"/>
+                    <form action="{% url 'change_quantity' %}" class="change-quantity-from">
+                        <input class="font-2" type="number" data-offer-id="{{ item.offer_id }}" value="{{ item.quantity }}" min="1" max="100" step="1"/>
+                    </form>
                 </div>
                 <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
-                    <span class="font-2 text-dark font-weight-bolder mr-3">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
-                    <a href="#" class="text-muted"><i class="far fa-trash-alt fa-sm"></i></a>
+                    <span class="offer-cost font-2 text-dark font-weight-bolder mr-3">{{ item.cost }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    <form action="{% url 'remove_from_cart' %}" class="remove-from-cart">
+                        <a href="#" class="text-muted" data-offer-id="{{ item.offer_id }}"><i class="far fa-trash-alt fa-sm"></i></a>
+                    </form>
                 </div>
             </div>
         </div> 
     {% endfor %}
 
-    <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+    <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="total-price font-2 h4 text-primary font-weight-bolder">{{ cart.get_total_price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
 
     <div class="d-flex justify-content-end pb-5">
         <a href="cart-address.html" class="btn btn-primary btn-sm font-2">продолжить<i class="fas fa-chevron-right fa-sm ml-3"></i></a>

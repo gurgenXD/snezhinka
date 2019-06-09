@@ -22,12 +22,12 @@
                                             <a href="{{ category_item.get_absolute_url }}" class="smaller text-dark d-block py-1 {% if category_item == category %}active{% endif %}">
                                                 {{ category_item.name }}<small class="text-muted ml-2">{{ category_item.products.all|length }}</small></a>
                                         {% else %}
-                                            <a href="{{ category_item.get_cat_absolute_url }}" class="smaller text-dark d-block py-1">{{ category_item.name }}<small class="text-muted ml-2">{{ category_item.products.all|length }}</small></a>
+                                            <a href="{{ category_item.get_cat_absolute_url }}" class="smaller text-dark d-block py-1 {% if category_item == category %}active{% endif %}">{{ category_item.name }}<small class="text-muted ml-2">{{ category_item.products.all|length }}</small></a>
                                         {% endif %}
                                         {% if category_item == category %}
                                             <ul class="list-unstyled">
-                                                {% for subcategory in category_item.subcategories.all %}
-                                                    <li><a href="{{ subcategory.get_absolute_url }}" class="smaller text-dark d-block py-1">{{ subcategory.name }}<small class="text-muted ml-2">{{ subcategory.products.all|length }}</small></a></li>
+                                                {% for subcategory_item in category_item.subcategories.all %}
+                                                    <li><a href="{{ subcategory_item.get_absolute_url }}" class="smaller text-dark d-block py-1 {% if subcategory_item == subcategory %}active{% endif %}">{{ subcategory_item.name }}<small class="text-muted ml-2">{{ subcategory_item.products.all|length }}</small></a></li>
                                                 {% endfor %}
                                             </ul>
                                         {% endif %}

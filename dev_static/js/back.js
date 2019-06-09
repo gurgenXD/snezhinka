@@ -78,8 +78,6 @@ $(document).ready(function(){
             material_value: material_value,
         }
 
-        console.log(data)
-
         $.ajax({
         	type: "POST",
         	url: $('#product-prop-form').attr('action'),
@@ -108,8 +106,6 @@ $(document).ready(function(){
             size_value: size_value,
             material_value: material_value,
         }
-
-        console.log(data)
         
         $.ajax({
         	type: "POST",
@@ -142,17 +138,58 @@ $(document).ready(function(){
             size_value: size_value,
         }
 
-        console.log(product_id, size_value, material_value)
-        
         $.ajax({
         	type: "POST",
         	url: $('#add-to-cart').attr('action'),
         	data: data,
             success: function(data) {
                 $('.cart-len').html(data.cart_len);
-                // $('.add-to-cart').css('display','none');
-                // $('.in-cart').css('display','block');
         	}
         });
     });
+
+    $('.remove-from-cart a').click(function() { // Удалить из корзины
+        offer_id = $(this).data('offer-id');
+
+		data = {
+            offer_id: offer_id,
+        }
+
+        $.ajax({
+        	type: "GET",
+        	url: $(this).parent('.remove-from-cart').attr('action'),
+        	data: data,
+            success: function(data) {
+                $('.cart-item-' + data.offer_id).addClass('d-none');
+                $('.total-price').html(data.total_price + '<i class="fas fa-ruble-sign fa-xs ml-1"></i>');
+                $('.cart-len').html(data.cart_len);
+        	}
+        });
+    });
+
+    function change_quantity() {
+        offer_id = $(this).parent().siblings().data('offer-id');
+        quantity = $(this).parent().siblings().val();
+        console.log(offer_id, quantity)
+
+		data = {
+            offer_id: offer_id,
+            quantity: quantity,
+        }
+
+        $.ajax({
+        	type: "GET",
+        	url: $(this).parent().parent().attr('action'),
+        	data: data,
+            success: function(data) {
+                $('.cart-item-' + offer_id + ' .offer-cost').html(data.offer_cost + '<i class="fas fa-ruble-sign fa-xs ml-1"></i>');
+                $('.total-price').html(data.total_price + '<i class="fas fa-ruble-sign fa-xs ml-1"></i>');
+                $('.cart-len').html(data.cart_len);
+        	}
+        });
+    }
+
+    $('.change-quantity-from input').on('blur', change_quantity);
+    $('.change-quantity-from .input-group-append').on('click', change_quantity);
+    $('.change-quantity-from .input-group-prepend').on('click', change_quantity);
 });

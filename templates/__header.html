@@ -116,15 +116,16 @@
                         </a>
                     </li>
 
-                    <li class="nav-item mb-2">
-                        <a class="nav-link py-2 smaller" href="login.html"><i class="far fa-user text-primary mr-2"></i>Войти</a>
-                    </li>
-
-                    <!--
-                    <li class="nav-item mb-2">
-                    <a class="nav-link py-2 smaller" href="orders.html"><i class="far fa-user text-primary mr-2"></i>Профиль<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
-                    </li>
-                    -->
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link py-2 smaller" href="login.html"><i class="far fa-user text-primary mr-2"></i>Войти</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link py-2 smaller" href="orders.html"><i class="far fa-user text-primary mr-2"></i>Профиль<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
+                        </li>
+                    {% endif %}
+                   
 
                     <li class="nav-item pb-3">
                         <form class="form-inline form-search">
@@ -138,14 +139,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link py-2 smaller text-danger" href="catalogue-items.html">Скидки %</a>
+                        <a class="nav-link py-2 smaller text-danger" href="catalogue-items11.html">Скидки %</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link py-2 smaller" href="catalogue-items.html">Новинки</a>
                     </li>
-                    {% for category in categories %}
+                    {% for item in product_types %}
                         <li class="nav-item">
-                            <a class="nav-link py-2 smaller" href="catalogue-categories.html">{{ category.name }}<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
+                            <a class="nav-link py-2 smaller" href="{{ item.get_absolute_url }}">{{ item.name }}<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
                         </li>
                     {% endfor %}
                     {% for item in main_points %}
@@ -183,7 +184,7 @@
                             {% for category in item.categories.all %}
                                 {% if not category.subcategories.all %}
                                     <div class="col-4">
-                                        <a class="dropdown-item smaller" href="catalogue-items.html">{{ category.name }}</a>
+                                        <a class="dropdown-item smaller" href="{{ category.get_cat_absolute_url }}">{{ category.name }}</a>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -192,9 +193,9 @@
                             {% for category in item.categories.all %}
                                 {% if category.subcategories.all %}
                                     <div class="col-4">
-                                        <a class="dropdown-item smaller" href="catalogue-items.html"><strong>{{ category.name }}</strong></a>
+                                        <a class="dropdown-item smaller" href="{{ category.get_absolute_url }}"><strong>{{ category.name }}</strong></a>
                                         {% for subcategory in category.subcategories.all %}
-                                            <a class="dropdown-item smaller" href="catalogue-items.html">{{ subcategory.name }}</a>
+                                            <a class="dropdown-item smaller" href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
                                         {% endfor %}
                                     </div>
                                 {% endif %}
