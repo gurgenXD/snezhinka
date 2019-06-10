@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 from orders.cart import Cart
 from products.models import Product, ProductSize, ProductMaterial, Offer
 from contacts.models import Phone, Schedule, Address, MapCode
+from orders.forms import PickUpForm, DeliveryForm
+from orders.models import OrderItem
 
 
 class CartView(View):
@@ -78,18 +80,79 @@ class ChangeQuantityView(View):
         return JsonResponse(context)
 
 
-class CarAddresstView(View):
+class CarAddressView(View):
     def get(self, request):
         phones = Phone.objects.all()
         shedules = Schedule.objects.all()
         addresses = Address.objects.all()
         map_code = MapCode.objects.first()
 
+        user = request.user
+
+        pickup_form = PickUpForm(user)
+        delivery_form = DeliveryForm(user)
+
         context = {
             'phones': phones,
             'shedules': shedules,
             'addresses': addresses,
             'map_code': map_code,
+            'pickup_form': pickup_form,
+            'delivery_form': delivery_form,
         }
 
         return render(request, 'orders/cart_address.html', context)
+
+
+class PickUpView(View):
+    def post(self, request):
+        cart = Cart(request)
+        user = request.user
+        pickup_form = PickUpForm(user, request.POST)
+        
+        if pickup_form.is_valid():
+            new_order = pickup_form.save(commit=False)
+            new_order.user = user
+            new_order.delivery = new_order.PICKUP
+            new_order.save()
+        else:
+            return redirect('cart_address')
+
+        for item in cart:
+            offer = Offer.objects.get(id=int(item['offer_id']))
+            OrderItem.objects.create(
+                order=new_order,
+                offer=offer,
+                price=item['price'],
+                quantity=item['quantity'],
+                total_price=item['cost']
+            )
+
+        return render(request, 'orders/cart_success.html', {})
+
+
+class DeliveryView(View):
+    def post(self, request):
+        cart = Cart(request)
+        user = request.user
+        delivery_form = DeliveryForm(user, request.POST)
+
+        if delivery_form.is_valid():
+            new_order = delivery_form.save(commit=False)
+            new_order.user = user
+            new_order.delivery = new_order.DELIVERY
+            new_order.save()
+        else:
+            return redirect('cart_address')
+        
+        for item in cart:
+            offer = Offer.objects.get(id=int(item['offer_id']))
+            OrderItem.objects.create(
+                order=new_order,
+                offer=offer,
+                price=item['price'],
+                quantity=item['quantity'],
+                total_price=item['cost']
+            )
+
+        return render(request, 'orders/cart_success.html', {})

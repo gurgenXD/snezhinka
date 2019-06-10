@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from products.models import Product
+from products.models import Offer
 
 
 class Order(models.Model):
@@ -33,16 +33,16 @@ class Order(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
-    full_name = models.CharField(max_length=250, verbose_name='ФИО', blank=True, null=True, default='')
-    email = models.EmailField(verbose_name='E-mail', blank=True, null=True, default='')
-    phone = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True, default='')
-    postcode = models.CharField(max_length=20, verbose_name='Индекс', blank=True, null=True, default='')
-    country = models.CharField(max_length=250, default='Россия', verbose_name='Страна', blank=True, null=True)
-    region = models.CharField(max_length=250, verbose_name='Регион', blank=True, null=True, default='')
-    locality = models.CharField(max_length=250, verbose_name='Населенный пункт', blank=True, null=True, default='')
-    address = models.CharField(max_length=250, verbose_name='Адресс', blank=True, null=True, default='')
+    full_name = models.CharField(max_length=250, verbose_name='ФИО', default='')
+    email = models.EmailField(verbose_name='E-mail')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    postcode = models.CharField(max_length=20, verbose_name='Индекс', default='')
+    country = models.CharField(max_length=250, default='Россия', verbose_name='Страна')
+    region = models.CharField(max_length=250, verbose_name='Регион / Область', default='')
+    locality = models.CharField(max_length=250, verbose_name='Город / Населённый пункт', default='')
+    address = models.CharField(max_length=250, verbose_name='Улица, дом, квартира / офис', default='')
     
-    total_price = models.PositiveIntegerField(default=0, verbose_name='Итоговая стоимость', blank=True, null=True)
+    total_price = models.PositiveIntegerField(default=0, verbose_name='Итоговая стоимость')
     delivery = models.CharField(max_length=250, choices=METHOD_OF_RECEIVING, verbose_name='Способ получения товара', default=PICKUP)
     status_delivery = models.CharField(max_length=250, choices=STATUS_DELIVERY, verbose_name='Статус доставки', default=NOTSHIPPED)
     # payment = models.CharField(max_length=250, choices=PAYMENT, verbose_name='Сбособ оплаты товара', default=CASH)
@@ -72,9 +72,9 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ', related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
-    price = models.PositiveIntegerField(default=0, verbose_name='Цена', blank=True, null=True)
-    total_price = models.PositiveIntegerField(default=0, verbose_name='Стоимость', blank=True, null=True, help_text='Посчитается при сохранении.')
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, verbose_name='Товар')
+    price = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    total_price = models.PositiveIntegerField(default=0, verbose_name='Стоимость', help_text='Посчитается при сохранении.')
     quantity = models.PositiveIntegerField(default=1, verbose_name='Количество')
 
     class Meta:

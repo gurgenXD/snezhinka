@@ -18,19 +18,20 @@
     </ul>
     <div class="tab-content pt-4">
         <div class="tab-pane fade show active" id="Stock">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" novalidate method="POST" action="{% url 'pickup' %}">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-4 col-md-4">
                         <p class="mb-3">Мы сообщим вам когда заказ будет доступен для самовывоза</p>
                         <p class="text-muted small mb-3">Заполняя данную форму, вы даёте согласие на <a href="agreement.html" target="_blank">обработку персональных данных</a></p>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Ваш E-mail" required>
+                            {{ pickup_form.email }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="+7 *** *** ** **" id="ConsumerStockPhone" required>
+                            {{ pickup_form.phone }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
@@ -72,29 +73,30 @@
 
         </div>
         <div class="tab-pane fade" id="Delivery">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" novalidate method="POST" action="{% url 'delivery' %}">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-4 col-md-4">
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Ваш E-mail" required>
+                            {{ delivery_form.email }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="+7 *** *** ** **" id="ConsumerDeliveryPhone" required>
+                            {{ delivery_form.phone }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Фамилия Имя Отчество" required>
+                            {{ delivery_form.full_name }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Почтовый индекс" required>
+                            {{ delivery_form.postcode }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
@@ -103,22 +105,22 @@
 
                     <div class="col-lg-4 col-md-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Россия" disabled>
+                            {{ delivery_form.country }}
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Регион / Область" required>
+                            {{ delivery_form.region }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Город / Населённый пункт" required>
+                            {{ delivery_form.locality }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Улица, дом, квартира / офис" required>
+                            {{ delivery_form.address }}
                             <div class="invalid-feedback">
                                 Это поле должно быть заполнено
                             </div>

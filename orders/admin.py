@@ -6,7 +6,7 @@ class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
     readonly_fields = ('total_price',)
-    fields = ('product', 'price', 'quantity', 'total_price')
+    fields = ('offer', 'price', 'quantity', 'total_price')
     classes = ('grp-collapse grp-closed',)
 
 
