@@ -3,7 +3,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
 from adminsortable2.admin import SortableAdminMixin
-from landing.models import ExtendedFlatPage
+from landing.models import ExtendedFlatPage, Agreement
 
 
 admin.site.unregister(FlatPage)
@@ -30,4 +30,12 @@ class TinyMCEFlatPageAdmin(SortableAdminMixin, FlatPageAdmin):
     )
 
 
-
+@admin.register(Agreement)
+class AgreementAdmin(admin.ModelAdmin):    
+    fieldsets = (
+        (None, {'fields': ('title', 'text')}),
+        ('SEO', {
+            'classes': ('grp-collapse grp-closed',),
+            'fields': ('seo_title', 'desc', 'keywords'),
+        }),
+    )

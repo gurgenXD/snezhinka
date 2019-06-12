@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Профиль</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2" href="{% url 'user_orders' %}"><h1>Заказы</h1></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2 active" href="{% url 'profile' %}">Профиль</a>
+        </li>
+        <a class="text-danger small ml-auto mt-3" href="{% url 'logout' %}">Выход</a>
+    </ul>
+
+    <div class="row pb-5">
+        <div class="col-lg-6 pr-lg-5">
+            <h2 class="h4 m-0 mb-3 font-weight-normal">Настройка профиля</h2>
+            <form class="needs-validation mb-5" novalidate>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Ваш E-mail" value="username@mail.ru" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>                        
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Старый пароль" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Новый пароль" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Подтвердить новый пароль" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-sm font-2" type="submit"><i class="fas fa-check mr-2"></i>сохранить</button>
+            </form>
+        </div>
+        <div class="col-lg-6 pl-lg-5">
+            <h2 class="h4 m-0 mb-3 font-weight-normal">Информация для доставки</h2>
+            <form class="needs-validation" novalidate>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="+7 *** *** ** **" id="ConsumerProfilePhone" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Фамилия Имя Отчество" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Почтовый индекс" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Россия" disabled>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Регион / Область" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Город / Населённый пункт" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Улица, дом, квартира / офис" required>
+                    <div class="invalid-feedback">
+                        Это поле должно быть заполнено
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-sm font-2" type="submit"><i class="fas fa-check mr-2"></i>сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

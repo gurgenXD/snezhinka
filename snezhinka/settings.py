@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'contacts',
     'feedback',
     'orders',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'users.User'
 
 FILEBROWSER_DIRECTORY = ''
 DIRECTORY = ''

@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Профиль</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2 active" href="{% url 'user_orders' %}"><h1>Заказы</h1></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark font-2" href="{% url 'profile' %}">Профиль</a>
+        </li>
+        <a class="text-danger small ml-auto mt-3" href="{% url 'logout' %}">Выход</a>
+    </ul>
+
+    <div class="mb-4">
+        <div class="p-0 bg-light font-2">
+            <div class="d-flex justify-content-start align-items-center smaller p-3">
+                <div>
+                    <span class="mb-1 text-dark d-block">№<strong>А0039954</strong></span>
+                    <span class="small text-dark d-block">12/4/2019</span>
+                </div>
+                <span class="ml-auto small text-dark"><i class="fas fa-clock mr-2"></i>Обрабатывается</span>
+                <!--                            <span class="ml-auto small text-primary"><i class="fas fa-truck mr-2"></i>Отправлен</span>-->
+                <!--                            <span class="ml-auto small text-info"><i class="fas fa-bell mr-2"></i>Готов к самовывозу</span>-->
+                <!--                            <span class="ml-auto small text-success"><i class="fas fa-check mr-2"></i>Завершён</span>-->
+            </div>
+        </div>
+
+        <div class="py-3 px-3">
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Коврик универсальный</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p9_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Скуфья замшевая</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+        </div>
+    </div>
+
+
+    <div class="mb-4">
+        <div class="p-0 bg-light font-2">
+            <div class="d-flex justify-content-start align-items-center smaller p-3">
+                <div>
+                    <span class="mb-1 text-dark d-block">№<strong>А0039954</strong></span>
+                    <span class="small text-dark d-block">12/4/2019</span>
+                </div>
+                <!--                        <span class="ml-auto small text-dark"><i class="fas fa-clock mr-2"></i>Обрабатывается</span>-->
+                <span class="ml-auto small text-primary"><i class="fas fa-truck mr-2"></i>Отправлен</span>
+                <!--                            <span class="ml-auto small text-info"><i class="fas fa-bell mr-2"></i>Готов к самовывозу</span>-->
+                <!--                            <span class="ml-auto small text-success"><i class="fas fa-check mr-2"></i>Завершён</span>-->
+            </div>
+        </div>
+
+        <div class="py-3 px-3">
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Коврик универсальный</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p9_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Скуфья замшевая</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+        </div>
+    </div>
+
+
+    <div class="mb-4">
+        <div class="p-0 bg-light font-2">
+            <div class="d-flex justify-content-start align-items-center smaller p-3">
+                <div>
+                    <span class="mb-1 text-dark d-block">№<strong>А0039954</strong></span>
+                    <span class="small text-dark d-block">12/4/2019</span>
+                </div>
+                <!--                        <span class="ml-auto small text-dark"><i class="fas fa-clock mr-2"></i>Обрабатывается</span>-->
+                <!--                            <span class="ml-auto small text-primary"><i class="fas fa-truck mr-2"></i>Отправлен</span>-->
+                <span class="ml-auto small text-info"><i class="fas fa-bell mr-2"></i>Готов к самовывозу</span>
+                <!--                            <span class="ml-auto small text-success"><i class="fas fa-check mr-2"></i>Завершён</span>-->
+            </div>
+        </div>
+
+        <div class="py-3 px-3">
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Коврик универсальный</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p9_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Скуфья замшевая</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+        </div>
+    </div>
+
+
+    <div class="mb-4">
+        <div class="p-0 bg-light font-2">
+            <div class="d-flex justify-content-start align-items-center smaller p-3">
+                <div>
+                    <span class="mb-1 text-dark d-block">№<strong>А0039954</strong></span>
+                    <span class="small text-dark d-block">12/4/2019</span>
+                </div>
+                <!--                        <span class="ml-auto small text-dark"><i class="fas fa-clock mr-2"></i>Обрабатывается</span>-->
+                <!--                            <span class="ml-auto small text-primary"><i class="fas fa-truck mr-2"></i>Отправлен</span>-->
+                <!--                                                    <span class="ml-auto small text-info"><i class="fas fa-bell mr-2"></i>Готов к самовывозу</span>-->
+                <span class="ml-auto small text-success"><i class="fas fa-check mr-2"></i>Завершён</span>
+            </div>
+        </div>
+
+        <div class="py-3 px-3">
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Коврик универсальный</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p9_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Скуфья замшевая</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+        </div>
+    </div>
+
+
+    <div class="mb-4">
+        <div class="p-0 bg-light font-2">
+            <div class="d-flex justify-content-start align-items-center smaller p-3">
+                <div>
+                    <span class="mb-1 text-dark d-block">№<strong>А0039954</strong></span>
+                    <span class="small text-dark d-block">12/4/2019</span>
+                </div>
+                <!--                        <span class="ml-auto small text-dark"><i class="fas fa-clock mr-2"></i>Обрабатывается</span>-->
+                <!--                            <span class="ml-auto small text-primary"><i class="fas fa-truck mr-2"></i>Отправлен</span>-->
+                <!--                            <span class="ml-auto small text-info"><i class="fas fa-bell mr-2"></i>Готов к самовывозу</span>-->
+                <span class="ml-auto small text-success"><i class="fas fa-check mr-2"></i>Завершён</span>
+            </div>
+        </div>
+
+        <div class="py-3 px-3">
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p1_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Коврик универсальный</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="cart-item mb-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12">
+                        <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
+                            <img src="images/p9_sm.jpg" alt="" class="mr-3">
+                            <div>
+                                <a href="product.html" class="stretched-link text-dark font-2 smaller">Скуфья замшевая</a>
+                                <span class="d-block small text-muted">250х100, овчина</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-md-end align-items-center justify-content-start">
+                        <div class="font-2 smaller font-weight-bolder">1</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6 text-right d-flex justify-content-end align-items-center">
+                        <span class="font-2 text-dark font-weight-bolder">3720<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 mb-5 text-right"><span class="mr-3 font-2 smaller text-muted">Сумма покупки:</span><span class="font-2 h4 text-primary font-weight-bolder">4570<i class="fas fa-ruble-sign fa-xs ml-1"></i></span></div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}

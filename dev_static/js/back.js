@@ -167,7 +167,7 @@ $(document).ready(function(){
         });
     });
 
-    function change_quantity() {
+    function change_quantity() { // Изменить количество товара
         offer_id = $(this).parent().siblings().data('offer-id');
         quantity = $(this).parent().siblings().val();
         console.log(offer_id, quantity)
