@@ -53,3 +53,27 @@ class RegisterForm(UserCreationForm):
             raise forms.ValidationError('Пароли не совпадают')
 
         return password2
+
+
+
+class UserInfoForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(UserInfoForm, self).__init__(*args, **kwargs)
+        self.fields['full_name'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Фамилия Имя Отчество', 'value': user.full_name}))
+        self.fields['phone'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerProfilePhone', 'value': user.phone}))
+        self.fields['postcode'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Почтовый индекс', 'value': user.postcode}))
+        self.fields['country'] = forms.CharField(required=False, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Россия', 'disabled': True, 'value': user.country}))
+        self.fields['region'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Регион / Область', 'value': user.region}))
+        self.fields['locality'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Город / Населённый пункт', 'value': user.locality}))
+        self.fields['address'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Улица, дом, квартира / офис', 'value': user.address}))
+
+    class Meta:
+        model = User
+        fields = ('phone', 'full_name', 'postcode', 'country', 'region', 'locality', 'address')

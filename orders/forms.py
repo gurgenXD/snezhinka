@@ -5,10 +5,10 @@ from orders.models import Order
 class PickUpForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):    
         super(PickUpForm, self).__init__(*args, **kwargs)
-        self.fields['email'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
-            'class': 'form-control', 'placeholder': 'Ваш E-mail', 'value': user.email}))
+        self.fields['email'] = forms.EmailField(required=False, widget=forms.EmailInput(attrs={
+            'class': 'form-control', 'placeholder': 'Ваш E-mail', 'disabled': True, 'value': user.email}))
         self.fields['phone'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
-            'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerDeliveryPhone', 'value': user.phone}))
+            'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerStockPhone', 'value': user.phone}))
 
     class Meta:
         model = Order
@@ -22,8 +22,8 @@ class DeliveryForm(forms.ModelForm):
             'class': 'form-control', 'placeholder': 'Фамилия Имя Отчество', 'value': user.full_name}))
         self.fields['phone'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
             'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerDeliveryPhone', 'value': user.phone}))
-        self.fields['email'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
-            'class': 'form-control', 'placeholder': 'Ваш E-mail', 'value': user.email}))
+        self.fields['email'] = forms.EmailField(required=False, widget=forms.EmailInput(attrs={
+            'class': 'form-control', 'placeholder': 'Ваш E-mail', 'disabled': True, 'value': user.email}))
         self.fields['postcode'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
             'class': 'form-control', 'placeholder': 'Почтовый индекс', 'value': user.postcode}))
         self.fields['country'] = forms.CharField(required=False, widget=forms.TextInput(attrs={

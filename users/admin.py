@@ -14,6 +14,7 @@ class MyUserAdmin(UserAdmin):
     )
 
     readonly_fields = ('country',)
+    list_display = ('username', 'full_name', 'phone', 'email', 'is_active')
 
 
 admin.site.register(User, MyUserAdmin)

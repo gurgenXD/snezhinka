@@ -113,6 +113,10 @@ class PickUpView(View):
         if pickup_form.is_valid():
             new_order = pickup_form.save(commit=False)
             new_order.user = user
+            
+            user.phone = pickup_form.cleaned_data.get('phone')
+            user.save()
+            
             new_order.delivery = new_order.PICKUP
             new_order.save()
         else:
@@ -137,9 +141,20 @@ class DeliveryView(View):
         user = request.user
         delivery_form = DeliveryForm(user, request.POST)
 
+        print(delivery_form)
+
         if delivery_form.is_valid():
             new_order = delivery_form.save(commit=False)
             new_order.user = user
+
+            user.phone = delivery_form.cleaned_data.get('phone')
+            user.full_name = delivery_form.cleaned_data.get('full_name')
+            user.postcode = delivery_form.cleaned_data.get('postcode')
+            user.region = delivery_form.cleaned_data.get('region')
+            user.locality = delivery_form.cleaned_data.get('locality')
+            user.address = delivery_form.cleaned_data.get('address')
+            user.save()
+
             new_order.delivery = new_order.DELIVERY
             new_order.save()
         else:

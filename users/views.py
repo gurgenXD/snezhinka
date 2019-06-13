@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from users.forms import LoginForm, RegisterForm
 from landing.tokens import account_activation_token
 from users.models import User
+from users.forms import UserInfoForm
 
 
 class LoginView(View):
@@ -114,46 +115,29 @@ def mylogout(request):
 
 class ProfileView(View):
     def get(self, request):
+        user = request.user
+        userinfo_form = UserInfoForm(user)
 
         context = {
+            'userinfo_form': userinfo_form,
         }
 
         return render(request, 'users/profile.html', context)
 
     def post(self, request):
-        reg_form = RegisterForm(request.POST)
+        user = request.user
+        userinfo_form = UserInfoForm(user, request.POST)
 
-        if reg_form.is_valid():
-            if request.recaptcha_is_valid:
-                new_user = reg_form.save(commit=False)
-                new_user.is_active = False
-                new_user.email = reg_form.cleaned_data.get('username')
-                new_user.username = reg_form.cleaned_data.get('username')
-                password = reg_form.cleaned_data.get('password1')
-                new_user.set_password(password)
-                new_user.save()
-                
-                try:
-                    current_site = get_current_site(request)
-                    mail_subject = 'Подтверждение почты'
-                    message = render_to_string('users/account_activate_message.html', {
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                        'token': account_activation_token.make_token(new_user),
-                    })
-                    to_email = new_user.email
-                    email = EmailMessage(mail_subject, message, to=[to_email])
-                    email.send()
-                except:
-                    return render(request, 'users/account_activate_error.html')
-                else:
-                    return render(request, 'users/account_activate_done.html')
+        if userinfo_form.is_valid():
+            user.phone = userinfo_form.cleaned_data.get('phone')
+            user.full_name = userinfo_form.cleaned_data.get('full_name')
+            user.postcode = userinfo_form.cleaned_data.get('postcode')
+            user.region = userinfo_form.cleaned_data.get('region')
+            user.locality = userinfo_form.cleaned_data.get('locality')
+            user.address = userinfo_form.cleaned_data.get('address')
+            user.save()
 
-        context = {
-            'reg_form': reg_form,
-        }
-
-        return render(request, 'users/register.html', context)
+        return redirect('profile')
 
 
 class UserOrdersView(View):
