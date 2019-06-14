@@ -15,7 +15,7 @@ class OrderAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('user', 'full_name', 'email', 'phone', 'postcode', 'country', 'region', 'locality',
-            'address', 'delivery', 'status_delivery', 'status_payment'),
+            'address', 'delivery', 'status'),
         }),
         ('Информация о заказе', {
             'classes': ('grp-collapse grp-closed',),

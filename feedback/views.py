@@ -41,7 +41,7 @@ class CallBackView(View):
 
 class FeedBackView(View):
     def post(self, request):
-        feedback_form = FeedBackForm(request.POST)
+        feedback_form = FeedBackForm(request.user, request.POST)
 
         if feedback_form.is_valid():
             if request.recaptcha_is_valid:

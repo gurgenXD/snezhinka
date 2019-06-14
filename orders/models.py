@@ -11,12 +11,12 @@ class Order(models.Model):
         (DELIVERY, 'Доставка'),
     ]
 
-    SHIPPED = 'shipped'
-    NOTSHIPPED = 'not_shipped'
-    STATUS_DELIVERY = [
-        (SHIPPED, 'Отгружено'),
-        (NOTSHIPPED, 'Неотгружено'),
-    ]
+    # SHIPPED = 'shipped'
+    # NOTSHIPPED = 'not_shipped'
+    # STATUS_DELIVERY = [
+    #     (SHIPPED, 'Отгружено'),
+    #     (NOTSHIPPED, 'Неотгружено'),
+    # ]
 
     # CASH = 'cash'
     # NOTCASH = 'not_cash'
@@ -25,11 +25,22 @@ class Order(models.Model):
     #     (NOTCASH, 'Безналичный расчет'),
     # ]
 
-    PAID = 'paid'
-    NOTPAID = 'not_paid'
-    STATUS_PAYMENT = [
-        (PAID, 'Оплачено'),
-        (NOTPAID, 'Неоплачено'),
+    # PAID = 'paid'
+    # NOTPAID = 'not_paid'
+    # STATUS_PAYMENT = [
+    #     (PAID, 'Оплачено'),
+    #     (NOTPAID, 'Неоплачено'),
+    # ]
+
+    IN_PROCESS = 'in_process'
+    SHIPPED = 'shipped'
+    READY_TO_PICKUP = 'ready_to_pickup'
+    COMPLETED = 'completed'
+    ORDER_STATUS = [
+        (IN_PROCESS, 'Обрабатывается'),
+        (SHIPPED, 'Отправлен'),
+        (READY_TO_PICKUP, 'Готов к самовывозу'),
+        (COMPLETED, 'Завершён'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
@@ -44,9 +55,10 @@ class Order(models.Model):
     
     total_price = models.PositiveIntegerField(default=0, verbose_name='Итоговая стоимость')
     delivery = models.CharField(max_length=250, choices=METHOD_OF_RECEIVING, verbose_name='Способ получения товара', default=PICKUP)
-    status_delivery = models.CharField(max_length=250, choices=STATUS_DELIVERY, verbose_name='Статус доставки', default=NOTSHIPPED)
+    # status_delivery = models.CharField(max_length=250, choices=STATUS_DELIVERY, verbose_name='Статус доставки', default=NOTSHIPPED)
     # payment = models.CharField(max_length=250, choices=PAYMENT, verbose_name='Сбособ оплаты товара', default=CASH)
-    status_payment = models.CharField(max_length=250, choices=STATUS_PAYMENT, verbose_name='Статус оплаты', default=NOTPAID)
+    # status_payment = models.CharField(max_length=250, choices=STATUS_PAYMENT, verbose_name='Статус оплаты', default=NOTPAID)
+    status = models.CharField(max_length=250, choices=ORDER_STATUS, verbose_name='Статус доставки', default=IN_PROCESS)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated = models.DateTimeField(auto_now=True, verbose_name='Изменено')
     saved = models.BooleanField(default=False, verbose_name='Был сохранен')

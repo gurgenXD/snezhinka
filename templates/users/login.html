@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="reset-password.html" class="small">Забыли пароль?</a>
+                            <a href="{% url 'password_reset' %}" class="small">Забыли пароль?</a>
                             <div class="custom-control custom-checkbox mt-n1">
                                 {{ login_form.remember_me }}
                                 <label class="custom-control-label small" for="customCheck1">Запомнить меня</label>

@@ -113,6 +113,7 @@ class PickUpView(View):
         if pickup_form.is_valid():
             new_order = pickup_form.save(commit=False)
             new_order.user = user
+            new_order.total_price = cart.get_total_price()
             
             user.phone = pickup_form.cleaned_data.get('phone')
             user.save()
@@ -131,6 +132,8 @@ class PickUpView(View):
                 quantity=item['quantity'],
                 total_price=item['cost']
             )
+        
+        cart.clear()
 
         return render(request, 'orders/cart_success.html', {})
 
@@ -146,6 +149,7 @@ class DeliveryView(View):
         if delivery_form.is_valid():
             new_order = delivery_form.save(commit=False)
             new_order.user = user
+            new_order.total_price = cart.get_total_price()
 
             user.phone = delivery_form.cleaned_data.get('phone')
             user.full_name = delivery_form.cleaned_data.get('full_name')
@@ -169,5 +173,7 @@ class DeliveryView(View):
                 quantity=item['quantity'],
                 total_price=item['cost']
             )
+
+        cart.clear()
 
         return render(request, 'orders/cart_success.html', {})

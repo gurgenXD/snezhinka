@@ -17,7 +17,7 @@ class IndexView(View):
         emails = Email.objects.all()
         map_code = MapCode.objects.first()
 
-        feedback_form = FeedBackForm()
+        feedback_form = FeedBackForm(request.user)
         
         context = {
             'news': news,

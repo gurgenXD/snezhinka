@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from users.models import User
 
 
@@ -62,7 +62,7 @@ class UserInfoForm(forms.ModelForm):
         self.fields['full_name'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
             'class': 'form-control', 'placeholder': 'Фамилия Имя Отчество', 'value': user.full_name}))
         self.fields['phone'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
-            'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerProfilePhone', 'value': user.phone}))
+            'class': 'form-control', 'placeholder': '+7 *** *** ** **', 'id': 'ConsumerStockPhone', 'value': user.phone}))
         self.fields['postcode'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
             'class': 'form-control', 'placeholder': 'Почтовый индекс', 'value': user.postcode}))
         self.fields['country'] = forms.CharField(required=False, widget=forms.TextInput(attrs={
@@ -77,3 +77,33 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('phone', 'full_name', 'postcode', 'country', 'region', 'locality', 'address')
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    def __init__(self, user, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(user, *args, **kwargs)
+        self.fields['email'] = forms.EmailField(required=False, widget=forms.EmailInput(attrs={
+            'class': 'form-control', 'placeholder': 'Ваш E-mail', 'disabled': True, 'value': user.email}))
+        self.fields['old_password'] = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
+            'class': 'form-control', 'placeholder': 'Старый пароль'}))
+        self.fields['new_password1'] = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
+            'class': 'form-control', 'placeholder': 'Новый пароль'}))
+        self.fields['new_password2'] = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
+            'class': 'form-control', 'placeholder': 'Подтвердить новый пароль'}))
+
+
+class PasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'E-mail'}))
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError('В нашей системе не зарегистрирован такой E-mail')
+
+        return email
+
+
+class SetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Новый пароль'}))
+    new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Повторите новый пароль'}))
