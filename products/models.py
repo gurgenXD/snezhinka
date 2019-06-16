@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MaxValueValidator
 from slugify import slugify
 from tinymce.models import HTMLField
 import math
@@ -16,8 +17,21 @@ class ProductType(models.Model):
     desc = models.CharField(max_length=250, verbose_name='Description', null=True, blank=True)
     keywords = models.CharField(max_length=250, verbose_name='Keywords', null=True, blank=True)
 
+    def get_picture_url(self, filename):
+        ext = filename.split('.')[-1]
+        filename = '%s.%s' % (self.id, ext)
+        return 'images/product_types/%s' % filename
+
+    image = models.ImageField(upload_to=get_picture_url, verbose_name='Изображение')
+
     def get_absolute_url(self):
         return reverse('product_type', args=[self.slug])
+    
+    def get_sale_url(self):
+        return reverse('sale_product_type', args=[self.slug])
+    
+    def get_new_url(self):
+        return reverse('new_product_type', args=[self.slug])
 
     class Meta:
         verbose_name = 'Тип товаров'
@@ -52,6 +66,18 @@ class Category(models.Model):
     
     def get_cat_absolute_url(self):
         return reverse('products', args=[self.product_type.slug, self.slug, 'all'])
+    
+    def get_sale_url(self):
+        return reverse('sale_category', args=[self.product_type.slug, self.slug])
+    
+    def get_cat_sale_url(self):
+        return reverse('sale_products', args=[self.product_type.slug, self.slug, 'all'])
+    
+    def get_new_url(self):
+        return reverse('new_category', args=[self.product_type.slug, self.slug])
+    
+    def get_cat_new_url(self):
+        return reverse('new_products', args=[self.product_type.slug, self.slug, 'all'])
 
     class Meta:
         verbose_name = 'Категория'
@@ -83,6 +109,13 @@ class SubCategory(models.Model):
 
     def get_absolute_url(self):
         return reverse('products', args=[self.category.product_type.slug, self.category.slug, self.slug])
+
+    def get_sale_url(self):
+        return reverse('sale_products', args=[self.category.product_type.slug, self.category.slug, self.slug])
+
+    def get_new_url(self):
+        return reverse('new_products', args=[self.category.product_type.slug, self.category.slug, self.slug])
+
 
     class Meta:
         verbose_name = 'Подкатегория'
@@ -131,6 +164,7 @@ class Product(models.Model):
     vendor_code = models.CharField(max_length=50, verbose_name='Артикул')
     description = models.TextField(verbose_name='Описание')
     is_active = models.BooleanField(default=True, verbose_name='Активно')
+    is_new = models.BooleanField(default=True, verbose_name='Новинка')
 
     slug = models.SlugField(max_length=250, verbose_name='Slug', unique=True, help_text='Заполнится при сохранении')
     seo_title = models.CharField(max_length=250, verbose_name='Title', null=True, blank=True)
@@ -142,7 +176,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         if self.subcategory:
-            subcategory = self.subcategory
+            subcategory = self.subcategory.slug
         else:
             subcategory = 'all'
         return reverse('product_detail', args=[self.product_type.slug, self.category.slug, subcategory, self.slug])
@@ -200,7 +234,7 @@ class Offer(models.Model):
     material = models.CharField(max_length=250, verbose_name='Материал')
     size = models.CharField(max_length=250, verbose_name='Размер')
     price_without_sale = models.PositiveIntegerField(default=0, verbose_name='Цена без скидки')
-    sale = models.PositiveIntegerField(default=0, verbose_name='Скидка')
+    sale = models.PositiveIntegerField(default=0, verbose_name='Скидка', validators=[MaxValueValidator(100)])
     price = models.PositiveIntegerField(default=0, verbose_name='Цена со скидкой', help_text='Заполнится при сохранении')
     stock = models.PositiveIntegerField(default=0, verbose_name='На складе')
     purchased = models.PositiveIntegerField(default=0, verbose_name='Куплено')

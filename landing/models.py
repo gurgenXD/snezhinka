@@ -30,3 +30,37 @@ class Agreement(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class OurPros(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.CharField(max_length=250, verbose_name='Текст')
+
+    def get_picture_url(self, filename):
+        return 'images/our_pros/%s' % filename
+
+    image = models.ImageField(upload_to=get_picture_url, verbose_name='Изображение')
+
+    class Meta:
+        verbose_name = 'Наш плюс'
+        verbose_name_plural = 'Наши плюсы'
+
+    def __str__(self):
+        return '%s' % self.title
+
+
+class AboutUs(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = HTMLField(verbose_name='Текст')
+
+    class Meta:
+        verbose_name = 'О нас'
+        verbose_name_plural = 'О нас'
+
+    def get_picture_url(self, filename):
+        return 'images/about_us/%s' % filename
+
+    image = models.ImageField(upload_to=get_picture_url, verbose_name='Изображение', blank=True, null=True)
+
+    def __str__(self):
+        return '%s' % self.title

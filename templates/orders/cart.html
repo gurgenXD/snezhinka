@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-6 col-12">
                     <div class="cart-item-name d-flex justify-content-start align-items-center mb-md-0 mb-3">
-                        <img src="{{ item.offer_image_url.url }}" alt="" class="mr-3">
+                        <img src="{{ item.offer_image_url|resize:'cart_resize' }}" alt="" class="mr-3">
                         <div>
                             <a href="{{ item.offer_get_absolute_url }}" class="stretched-link text-dark font-2">{{ item.offer_name }}</a>
                             <span class="d-block small text-muted">{{ item.offer_size }}, {{ item.offer_material }}</span>

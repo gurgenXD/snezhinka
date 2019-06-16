@@ -14,10 +14,16 @@ class CallBackForm(forms.ModelForm):
 class FeedBackForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(FeedBackForm, self).__init__(*args, **kwargs)
-        self.fields['name'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
-            'class': 'form-control', 'placeholder': 'Ваше имя', 'value': user.full_name}))
-        self.fields['email'] = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-            'class': 'form-control', 'placeholder': 'E-mail', 'value': user.email}))
+        if user.is_anonymous:
+            self.fields['name'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Ваше имя'}))
+            self.fields['email'] = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+                'class': 'form-control', 'placeholder': 'E-mail'}))
+        else:
+            self.fields['name'] = forms.CharField(required=True, widget=forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Ваше имя', 'value': user.full_name}))
+            self.fields['email'] = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+                'class': 'form-control', 'placeholder': 'E-mail', 'value': user.email}))
 
     class Meta:
         model = FeedBack

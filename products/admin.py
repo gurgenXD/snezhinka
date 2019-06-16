@@ -29,7 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('product_type', 'category', 'subcategory', 'name', 'price_without_sale', 'materials', 'sizes',
-            'description', 'features', 'color', 'vendor_code', 'is_active'),
+            'description', 'features', 'color', 'vendor_code', 'is_active', 'is_new'),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),
@@ -40,7 +40,9 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('slug',)
     inlines = (ImageInline, OfferInline)
     list_filter = ('product_type', 'category', 'subcategory')
-    list_display = ('name', 'product_type', 'category', 'subcategory', 'is_active')
+    list_display = ('name', 'product_type', 'category', 'subcategory', 'is_active', 'is_new')
+    list_editable = ('is_active', 'is_new')
+    search_fields = ('name', 'product_type__name', 'category__name', 'subcategory__name')
 
 
 @admin.register(Category)
@@ -80,7 +82,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductTypeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name',),
+            'fields': ('name', 'image'),
         }),
         ('SEO', {
             'classes': ('grp-collapse grp-closed',),

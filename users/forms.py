@@ -22,10 +22,8 @@ class LoginForm(forms.ModelForm):
             user = User.objects.get(username=username)
             if not user.check_password(password):
                 raise forms.ValidationError('E-mail или пароль неверный')
-                print('я тут')
         except User.DoesNotExist:
             raise forms.ValidationError('E-mail или пароль неверный')
-            print('а я тут')
 
 
 class RegisterForm(UserCreationForm):

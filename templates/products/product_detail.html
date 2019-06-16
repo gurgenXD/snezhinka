@@ -90,18 +90,23 @@
 
     <h1 class="h3 m-0 mb-4 mt-0 mt-lg-4 font-weight-normal">Вам могут понравится:</h1>
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-            <div class="product-item mb-5 cp">
-                <img src="" class="w-100 product-item-img mb-2" alt="">
-                <div class="eq-h mb-2">
-                    <a href="product.html" class="stretched-link text-dark smaller">Скуфья с бортиком</a>
-                    <span class="d-block small text-muted">Камилавки и скуфьи</span>
+        {% for offer in similar_offers %}
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="product-item mb-5 cp">
+                    <img src="{{ offer.product.get_main_image.image.url|resize:'similar_resize' }}" class="w-100 product-item-img mb-2" alt="">
+                    <div class="eq-h mb-2">
+                        <a href="{{ offer.product.get_absolute_url }}" class="stretched-link text-dark smaller">{{ offer.product.name }}</a>
+                        <span class="d-block small text-muted">{{ offer.prodcut.category.name }}</span>
+                    </div>
+                    {% if offer.price != offer.price_without_sale %}
+                        <span class="font-2 mr-2"><del>{{ offer.price_without_sale }}</del></span>
+                        <span class="font-2 text-danger">{{ offer.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    {% else %}
+                        <span class="font-2 text-dark">{{ offer.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    {% endif %}
                 </div>
-                <!--<span class="font-2 mr-2"><del>940</del></span>-->
-                <!--<span class="font-2 text-danger">850<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>-->
-                <span class="font-2 text-dark">880<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
             </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock content %}

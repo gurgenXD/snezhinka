@@ -146,6 +146,8 @@ IMAGEFIT_PRESETS = {
     'news_resize': {'width': 690, 'height': 388, 'crop': True},
     'category_resize': {'width': 280, 'height': 280, 'crop': True},
     'product_list_resize': {'width': 240, 'height': 240, 'crop': True},
+    'similar_resize': {'width': 255, 'height': 255, 'crop': True},
+    'cart_resize': {'width': 54, 'height': 54, 'crop': True},
     'product_resize': {'width': 1080, 'height': 1080, 'crop': True},
     'product_medium_resize': {'width': 700, 'height': 700, 'crop': True},
 }

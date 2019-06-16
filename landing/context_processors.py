@@ -26,7 +26,7 @@ def header_info(request):
         'drop_points': drop_points,
         'phone': phone,
         'callback_form': callback_form,
-        'product_types': product_types,
+        'main_product_types': product_types,
     }
 
     return context

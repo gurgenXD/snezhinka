@@ -139,17 +139,17 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link py-2 smaller text-danger" href="catalogue-items11.html">Скидки %</a>
+                        <a class="nav-link py-2 smaller text-danger" href="{% url 'sale_product_type' 'tserkovnye-tovary' %}">Скидки %</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link py-2 smaller" href="catalogue-items.html">Новинки</a>
+                        <a class="nav-link py-2 smaller" href="{% url 'new_product_type' 'tserkovnye-tovary' %}">Новинки</a>
                     </li>
-                    {% for item in product_types %}
+                    {% for item in main_product_types %}
                         <li class="nav-item">
                             <a class="nav-link py-2 smaller" href="{{ item.get_absolute_url }}">{{ item.name }}<i class="fas fa-chevron-right fa-xs ml-2"></i></a>
                         </li>
                     {% endfor %}
-                    {% for item in main_points %}
+                    {% for item in main_product_types %}
                         <li class="nav-item">
                             <a class="nav-link py-2 smaller" href="{{ item.url }}">{{ item.title }}</a>
                         </li>
@@ -170,11 +170,11 @@
     <div class="container px-0 position-relative">
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link smaller text-dark" href="catalogue-items.html">
+                <a class="nav-link smaller text-dark" href="{% url 'new_product_type' 'tserkovnye-tovary' %}">
                     Новинки
                 </a>
             </li>
-            {% for item in product_types %}
+            {% for item in main_product_types %}
                 <li class="nav-item dropdown dropdown-mega">
                     <a class="nav-link dropdown-toggle smaller text-dark {% if item == product_type %}active{% endif %}" href="{{ item.get_absolute_url }}">
                         {{ item.name }}
@@ -205,7 +205,7 @@
                 </li>
             {% endfor %}
             <li class="nav-item">
-                <a class="nav-link smaller text-danger" href="catalogue-items.html">
+                <a class="nav-link smaller text-danger" href="{% url 'sale_product_type' 'tserkovnye-tovary' %}">
                     Скидки %
                 </a>
             </li>
