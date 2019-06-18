@@ -16,7 +16,7 @@
         <a class="text-danger small ml-auto mt-3" href="{% url 'logout' %}">Выход</a>
     </ul>
 
-    {% for  order in user_orders %}
+    {% for  order in page_object.object_list %}
         <div class="mb-4">
             <div class="p-0 bg-light font-2">
                 <div class="d-flex justify-content-start align-items-center smaller p-3">
@@ -64,4 +64,6 @@
     {% endfor %}
 
 </div>
+
+{% include '__pagination.html' %}
 {% endblock content %}

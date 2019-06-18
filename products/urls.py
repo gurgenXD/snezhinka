@@ -16,4 +16,6 @@ urlpatterns = [
     path('new/products/<product_type_slug>/', views.NewProductTypeView.as_view(), name='new_product_type'),
     path('new/products/<product_type_slug>/<category_slug>/', views.NewCategoryView.as_view(), name='new_category'),
     path('new/products/<product_type_slug>/<category_slug>/<subcategory_slug>/', views.NewProductsView.as_view(), name='new_products'),
+
+    path('search/result/', views.ProductSearchView.as_view(), name='search_result'),
 ]

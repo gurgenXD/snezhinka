@@ -129,37 +129,15 @@
         <div class="container">
             <h3 class="m-0 mb-5 text-center text-white font-weight-normal">Нас выбирают</h3>
             <div class="row justify-content-md-center">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="feature px-4 mb-lg-0 mb-5">
-                        <div class="feature-img mx-auto" style="background-image:url({% static 'images/f1.png' %})"></div>
-                        <h3 class="h5 text-center font-weight-normal text-white">Материалы</h3>
-                        <p class="m-0 text-center text-white small">Все материалы отбираются под строгим контролем качества</p>
+                {% for item in our_pros %}
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="feature px-4 mb-lg-0 mb-5">
+                            <div class="feature-img mx-auto" style="background-image:url({{ item.image.url|resize:'100x100,C' }})"></div>
+                            <h3 class="h5 text-center font-weight-normal text-white">{{ item.title }}</h3>
+                            <p class="m-0 text-center text-white small">{{ item.text }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="feature px-4 mb-lg-0 mb-5">
-                        <div class="feature-img mx-auto" style="background-image:url({% static 'images/f2.png' %})"></div>
-                        <h3 class="h5 text-center font-weight-normal text-white">Доставка</h3>
-                        <p class="m-0 text-center text-white small">Наш товар найдёт вас в абсолютно любой точке России</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="feature px-4 mb-lg-0 mb-5">
-                        <div class="feature-img mx-auto" style="background-image:url({% static 'images/f3.png' %})"></div>
-                        <h3 class="h5 text-center font-weight-normal text-white">Опыт</h3>
-                        <p class="m-0 text-center text-white small">Более 10 лет работы на рынке текстильной продукции</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="feature px-4 mb-lg-0 mb-5">
-                        <div class="feature-img mx-auto" style="background-image:url({% static 'images/f4.png' %})"></div>
-                        <h3 class="h5 text-center font-weight-normal text-white">Внимание</h3>
-                        <p class="m-0 text-center text-white small">Индивидуальная работа с каждым нашим покупателем</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

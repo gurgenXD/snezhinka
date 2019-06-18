@@ -11,27 +11,6 @@ class Order(models.Model):
         (DELIVERY, 'Доставка'),
     ]
 
-    # SHIPPED = 'shipped'
-    # NOTSHIPPED = 'not_shipped'
-    # STATUS_DELIVERY = [
-    #     (SHIPPED, 'Отгружено'),
-    #     (NOTSHIPPED, 'Неотгружено'),
-    # ]
-
-    # CASH = 'cash'
-    # NOTCASH = 'not_cash'
-    # PAYMENT = [
-    #     (CASH, 'Наличный расчет'),
-    #     (NOTCASH, 'Безналичный расчет'),
-    # ]
-
-    # PAID = 'paid'
-    # NOTPAID = 'not_paid'
-    # STATUS_PAYMENT = [
-    #     (PAID, 'Оплачено'),
-    #     (NOTPAID, 'Неоплачено'),
-    # ]
-
     IN_PROCESS = 'in_process'
     SHIPPED = 'shipped'
     READY_TO_PICKUP = 'ready_to_pickup'
@@ -55,9 +34,6 @@ class Order(models.Model):
     
     total_price = models.PositiveIntegerField(default=0, verbose_name='Итоговая стоимость')
     delivery = models.CharField(max_length=250, choices=METHOD_OF_RECEIVING, verbose_name='Способ получения товара', default=PICKUP)
-    # status_delivery = models.CharField(max_length=250, choices=STATUS_DELIVERY, verbose_name='Статус доставки', default=NOTSHIPPED)
-    # payment = models.CharField(max_length=250, choices=PAYMENT, verbose_name='Сбособ оплаты товара', default=CASH)
-    # status_payment = models.CharField(max_length=250, choices=STATUS_PAYMENT, verbose_name='Статус оплаты', default=NOTPAID)
     status = models.CharField(max_length=250, choices=ORDER_STATUS, verbose_name='Статус доставки', default=IN_PROCESS)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated = models.DateTimeField(auto_now=True, verbose_name='Изменено')
@@ -72,14 +48,6 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
-
-    # def save(self, *args, **kwargs):
-    #     if self.status_payment.id != 1 and self.saved == False:
-    #         for item in self.items.all():
-    #             item.product.stock -= item.quantity
-    #             item.product.save()
-    #             self.saved = True
-    #     super(Order, self).save(*args, **kwargs)
 
 
 class OrderItem(models.Model):
@@ -98,9 +66,3 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-    
-    # def save(self, *args, **kwargs):
-    #     if self.order.status_payment.id != 1:   
-    #         self.product.stock -= self.quantity
-    #         self.product.save()
-    #     super(OrderItem, self).save(*args, **kwargs)

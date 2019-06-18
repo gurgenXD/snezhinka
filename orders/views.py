@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+
 from orders.cart import Cart
 from products.models import Product, ProductSize, ProductMaterial, Offer
 from contacts.models import Phone, Schedule, Address, MapCode
 from orders.forms import PickUpForm, DeliveryForm
 from orders.models import OrderItem
+from landing.models import MailToString
 
 
 class CartView(View):
@@ -122,7 +128,7 @@ class PickUpView(View):
             new_order.save()
         else:
             return redirect('cart_address')
-
+        
         for item in cart:
             offer = Offer.objects.get(id=int(item['offer_id']))
             OrderItem.objects.create(
@@ -132,7 +138,17 @@ class PickUpView(View):
                 quantity=item['quantity'],
                 total_price=item['cost']
             )
-        
+
+        current_site = get_current_site(request)
+        mail_subject = 'Новый заказ на сайте: ' + current_site.domain
+        message = render_to_string('orders/new_order_message.html', {
+            'domain': current_site.domain,
+            'order': new_order,
+        })
+        to_email = MailToString.objects.first().email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+
         cart.clear()
 
         return render(request, 'orders/cart_success.html', {})
@@ -143,8 +159,6 @@ class DeliveryView(View):
         cart = Cart(request)
         user = request.user
         delivery_form = DeliveryForm(user, request.POST)
-
-        print(delivery_form)
 
         if delivery_form.is_valid():
             new_order = delivery_form.save(commit=False)
@@ -173,6 +187,16 @@ class DeliveryView(View):
                 quantity=item['quantity'],
                 total_price=item['cost']
             )
+        
+        current_site = get_current_site(request)
+        mail_subject = 'Новый заказ на сайте: ' + current_site.domain
+        message = render_to_string('orders/new_order_message.html', {
+            'domain': current_site.domain,
+            'order': new_order,
+        })
+        to_email = MailToString.objects.first().email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
 
         cart.clear()
 

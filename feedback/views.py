@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 
 from feedback.forms import CallBackForm, FeedBackForm
+from landing.models import MailToString
 
 
 class CallBackView(View):
@@ -21,7 +22,7 @@ class CallBackView(View):
                     'domain': current_site.domain,
                     'phone': request.POST.get('phone'),
                 })
-                to_email = 'goga23d@gmail.com'
+                to_email = MailToString.objects.first().email
                 email = EmailMessage(mail_subject, message, to=[to_email])
                 email.send()
             except:
@@ -54,7 +55,7 @@ class FeedBackView(View):
                         'name': request.POST.get('name'),
                         'message': request.POST.get('message'),
                     })
-                    to_email = 'goga23d@gmail.com'
+                    to_email = MailToString.objects.first().email
                     email = EmailMessage(mail_subject, message, to=[to_email])
                     email.send()
                 except:

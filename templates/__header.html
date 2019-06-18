@@ -54,11 +54,11 @@
         </button>
 
         <div class="collapse navbar-collapse basis-100">
-            <form class="form-inline form-search">
+            <form class="form-inline form-search" method="GET" action="{% url 'search_result' %}">
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-sm is-mouse-focused pr-4" placeholder="Поиск">
+                    <input type="text" name="query" class="form-control form-control-sm is-mouse-focused pr-4" placeholder="Поиск">
                     <div class="input-group-append">
-                        <button class="btn btn-sm is-mouse-focused" type="button"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-sm is-mouse-focused" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
@@ -128,11 +128,11 @@
                    
 
                     <li class="nav-item pb-3">
-                        <form class="form-inline form-search">
+                        <form class="form-inline form-search" method="GET" action="{% url 'search_result' %}">
                             <div class="input-group w-100">
-                                <input type="text" class="form-control is-mouse-focused pr-4" placeholder="Поиск">
+                                <input type="text" name="query" class="form-control is-mouse-focused pr-4" placeholder="Поиск">
                                 <div class="input-group-append w-0">
-                                    <button class="btn btn-sm is-mouse-focused" type="button"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-sm is-mouse-focused" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
                         </form>

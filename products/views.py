@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.db.models import Q
 from products.models import Product, Category, ProductType, SubCategory, Offer, ProductMaterial, ProductSize
+from landing.pagination import pagination
 
 
 class ProductTypeView(View):
@@ -135,7 +136,6 @@ class NewCategoryView(View):
         return render(request, 'products/new_category.html', context)
 
 
-
 class ProductsView(View):
     def get(self, request, product_type_slug, category_slug, subcategory_slug):
         product_type = get_object_or_404(ProductType, slug=product_type_slug)
@@ -150,12 +150,20 @@ class ProductsView(View):
         offers = []
         for product in products:
             offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
-                
+
+        page_number = request.GET.get('page', 1)
+        pag_res = pagination(offers, page_number)
+
         context = {
             'category': category,
             'product_type': product_type,
             'subcategory': subcategory,
             'offers': offers,
+
+            'page_object': pag_res['page'],
+            'is_paginated': pag_res['is_paginated'],
+            'next_url': pag_res['next_url'],
+            'prev_url': pag_res['prev_url'],
         }
 
         return render(request, 'products/products.html', context)
@@ -190,6 +198,8 @@ class SaleProductsView(View):
         for product in sale_products:
             offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
 
+        page_number = request.GET.get('page', 1)
+        pag_res = pagination(offers, page_number)
                 
         context = {
             'category': category,
@@ -200,6 +210,11 @@ class SaleProductsView(View):
             'product_types': product_types,
             'subcategories': subcategories,
             'len_sale_category': len(sale_products),
+
+            'page_object': pag_res['page'],
+            'is_paginated': pag_res['is_paginated'],
+            'next_url': pag_res['next_url'],
+            'prev_url': pag_res['prev_url'],
         }
 
         return render(request, 'products/sale_products.html', context)
@@ -227,6 +242,8 @@ class NewProductsView(View):
         for product in new_products:
             offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
 
+        page_number = request.GET.get('page', 1)
+        pag_res = pagination(offers, page_number)
                 
         context = {
             'category': category,
@@ -237,6 +254,11 @@ class NewProductsView(View):
             'product_types': product_types,
             'subcategories': subcategories,
             'len_new_category': len(new_products),
+
+            'page_object': pag_res['page'],
+            'is_paginated': pag_res['is_paginated'],
+            'next_url': pag_res['next_url'],
+            'prev_url': pag_res['prev_url'],
         }
 
         return render(request, 'products/new_products.html', context)
@@ -248,7 +270,6 @@ class ProductDetailView(View):
         category = get_object_or_404(Category, slug=category_slug, product_type=product_type)
         subcategory = SubCategory.objects.filter(slug=subcategory_slug, category=category)
         product = get_object_or_404(Product, slug=product_slug, category=category, product_type=product_type)
-
         offers = product.offers.all()
 
         materials = list(set(item.material for item in offers))
@@ -267,8 +288,8 @@ class ProductDetailView(View):
             similar_products = similar_products[:8]
 
         similar_offers = []
-        for product in similar_products:
-            similar_offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
+        for s_product in similar_products:
+            similar_offers.append(min((item for item in s_product.offers.all()), key=lambda x:x.price))
 
         context = {
             'product': product,
@@ -291,8 +312,8 @@ class ChangeProductProp(View):
         material_value = request.POST.get('material_value')
 
         product = Product.objects.get(id=int(product_id))
-        
-        offer = Offer.objects.get(material=material_value, size=size_value, product=product)
+
+        offer = Offer.objects.get(material__icontains=material_value, size__icontains=size_value, product=product)
 
         context = {
             'offer_price_without_sale': offer.price_without_sale,
@@ -300,3 +321,44 @@ class ChangeProductProp(View):
         }
     
         return JsonResponse(context)
+
+
+class ProductSearchView(View):
+    def get(self, request):
+        products = Product.objects.filter(is_active=True)
+        query = request.GET.get('query')
+
+        if query:
+            products = products.filter(
+                Q(name__icontains=query)|
+                Q(product_type__name__icontains=query)|
+                Q(category__name__icontains=query)|
+                Q(subcategory__name__icontains=query)|
+                Q(materials__icontains=query)|
+                Q(sizes__icontains=query)|
+                Q(features__icontains=query)|
+                Q(description__icontains=query)|
+                Q(color__icontains=query)|
+                Q(vendor_code__icontains=query)
+                ).distinct()
+        
+        products_len = len(products)
+
+        offers = []
+        for product in products:
+            offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
+
+        page_number = request.GET.get('page', 1)
+        pag_res = pagination(offers, page_number)
+
+        context = {
+            'products_len': products_len,
+            'offers': offers,
+
+            'page_object': pag_res['page'],
+            'is_paginated': pag_res['is_paginated'],
+            'next_url': pag_res['next_url'],
+            'prev_url': pag_res['prev_url'],
+        }
+        
+        return render(request, 'products/search_result.html', context)

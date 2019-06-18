@@ -16,6 +16,7 @@ from landing.tokens import account_activation_token
 from users.models import User
 from users.forms import UserInfoForm, ChangePasswordForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from orders.models import Order
+from landing.pagination import pagination
 
 
 class LoginView(View):
@@ -179,8 +180,16 @@ class UserOrdersView(View):
 
         user_orders = Order.objects.filter(user=user).order_by('-created')
 
+        page_number = request.GET.get('page', 1)
+        pag_res = pagination(user_orders, page_number)
+
         context = {
             'user_orders': user_orders,
+
+            'page_object': pag_res['page'],
+            'is_paginated': pag_res['is_paginated'],
+            'next_url': pag_res['next_url'],
+            'prev_url': pag_res['prev_url'],
         }
 
         return render(request, 'users/orders.html', context)

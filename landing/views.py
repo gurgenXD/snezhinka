@@ -26,7 +26,7 @@ class IndexView(View):
             offers.append(min((item for item in product.offers.all()), key=lambda x:x.price))
         
         about_us = AboutUs.objects.first()
-        our_pros = AboutUs.objects.all()
+        our_pros = OurPros.objects.all()
         
         context = {
             'news': news,

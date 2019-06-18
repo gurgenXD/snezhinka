@@ -2,7 +2,9 @@
 {% load imagefit %}
 
 {% block title %}
-    <title>Новости</title>
+    <title>{{ product_type.seo_title }}</title>
+    <meta name="description" content="{{ product_type.desc }}">
+    <meta name="keywords" content="{{ product_type.keywords }}">
 {% endblock title %}
 
 {% block content %}

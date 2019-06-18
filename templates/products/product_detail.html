@@ -90,19 +90,19 @@
 
     <h1 class="h3 m-0 mb-4 mt-0 mt-lg-4 font-weight-normal">Вам могут понравится:</h1>
     <div class="row">
-        {% for offer in similar_offers %}
+        {% for item in similar_offers %}
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="product-item mb-5 cp">
-                    <img src="{{ offer.product.get_main_image.image.url|resize:'similar_resize' }}" class="w-100 product-item-img mb-2" alt="">
+                    <img src="{{ item.product.get_main_image.image.url|resize:'similar_resize' }}" class="w-100 product-item-img mb-2" alt="">
                     <div class="eq-h mb-2">
-                        <a href="{{ offer.product.get_absolute_url }}" class="stretched-link text-dark smaller">{{ offer.product.name }}</a>
-                        <span class="d-block small text-muted">{{ offer.prodcut.category.name }}</span>
+                        <a href="{{ item.product.get_absolute_url }}" class="stretched-link text-dark smaller">{{ item.product.name }}</a>
+                        <span class="d-block small text-muted">{{ item.prodcut.category.name }}</span>
                     </div>
-                    {% if offer.price != offer.price_without_sale %}
-                        <span class="font-2 mr-2"><del>{{ offer.price_without_sale }}</del></span>
-                        <span class="font-2 text-danger">{{ offer.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                    {% if item.price != item.price_without_sale %}
+                        <span class="font-2 mr-2"><del>{{ item.price_without_sale }}</del></span>
+                        <span class="font-2 text-danger">{{ item.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
                     {% else %}
-                        <span class="font-2 text-dark">{{ offer.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
+                        <span class="font-2 text-dark">{{ item.price }}<i class="fas fa-ruble-sign fa-xs ml-1"></i></span>
                     {% endif %}
                 </div>
             </div>
