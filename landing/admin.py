@@ -3,7 +3,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
 from adminsortable2.admin import SortableAdminMixin
-from landing.models import ExtendedFlatPage, Agreement, AboutUs, OurPros, MailToString, MailFromString
+from landing.models import ExtendedFlatPage, Agreement, AboutUs, OurPros, MailToString, MailFromString, TitleTag
 
 
 admin.site.unregister(FlatPage)
@@ -45,3 +45,4 @@ admin.site.register(AboutUs)
 admin.site.register(OurPros)
 admin.site.register(MailToString)
 admin.site.register(MailFromString)
+admin.site.register(TitleTag)

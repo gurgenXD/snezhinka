@@ -163,9 +163,11 @@ TINYMCE_DEFAULT_CONFIG = {
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LcNnpAUAAAAAP8zDEOl2Erhj2F9bMPOjQza78Hb'
 
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'goga23d@gmail.com'
-EMAIL_HOST_PASSWORD = 'khysaqitvdnqtneg'
+EMAIL_BACKEND = 'landing.backends.EmailBackend'
+
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'goga23d@gmail.com'
+# EMAIL_HOST_PASSWORD = 'khysaqitvdnqtneg'
 # EMAIL_HOST_PASSWORD = '1111'

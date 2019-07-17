@@ -4,6 +4,21 @@ from django.conf import settings
 from tinymce.models import HTMLField
 
 
+class TitleTag(models.Model):
+    url = models.CharField(max_length=250, verbose_name='URL')
+
+    seo_title = models.CharField(max_length=250, verbose_name='Title')
+    desc = models.CharField(max_length=250, verbose_name='Description')
+    keywords = models.CharField(max_length=250, verbose_name='Keywords')
+
+    class Meta:
+        verbose_name = 'SEO title'
+        verbose_name_plural = 'SEO titles'
+
+    def __str__(self):
+        return '%s' % self.seo_title
+
+
 class ExtendedFlatPage(FlatPage):
     my_order = models.PositiveIntegerField(default=0, blank=False, null=False, verbose_name='Сортировка')
 
@@ -79,25 +94,16 @@ class MailToString(models.Model):
 
 
 class MailFromString(models.Model):
-    email_use_tls = models.BooleanField(verbose_name='EMAIL_USE_TLS(gmail.com, mail.ru)', default=settings.EMAIL_USE_TLS)
-    email_use_ssl = models.BooleanField(verbose_name='EMAIL_USE_SSL(yandex.ru)', default=settings.EMAIL_USE_SSL)
-    email_port = models.PositiveIntegerField(verbose_name='EMAIL_PORT', default=settings.EMAIL_PORT)
-    email_host = models.CharField(max_length=250, verbose_name='EMAIL_HOST', default=settings.EMAIL_HOST)
-    email_host_user = models.EmailField(max_length=250, verbose_name='EMAIL_HOST_USER', default=settings.EMAIL_HOST_USER)
-    email_host_password = models.CharField(max_length=250, verbose_name='EMAIL_HOST_PASSWORD',default=settings.EMAIL_HOST_PASSWORD)
+    use_tls = models.BooleanField(verbose_name='EMAIL_USE_TLS(gmail.com, mail.ru)')
+    use_ssl = models.BooleanField(verbose_name='EMAIL_USE_SSL(yandex.ru)')
+    port = models.PositiveIntegerField(verbose_name='EMAIL_PORT')
+    host = models.CharField(max_length=250, verbose_name='EMAIL_HOST')
+    host_user = models.EmailField(max_length=250, verbose_name='EMAIL_HOST_USER')
+    host_password = models.CharField(max_length=250, verbose_name='EMAIL_HOST_PASSWORD')
 
     class Meta:
         verbose_name = 'Откуда отправлять письмо'
         verbose_name_plural = 'Откуда отправлять письмо'
 
     def __str__(self):
-        return '%s' % self.email_host_user
-
-    def save(self, *args, **kwargs):
-        settings.EMAIL_USE_TLS = self.email_use_tls
-        settings.EMAIL_USE_SSL = self.email_use_ssl
-        settings.EMAIL_PORT = self.email_port
-        settings.EMAIL_HOST = self.email_host
-        settings.EMAIL_HOST_USER = self.email_host_user
-        settings.EMAIL_HOST_PASSWORD = self.email_host_password
-        super(MailFromString, self).save(*args, **kwargs)
+        return '%s' % self.host_user

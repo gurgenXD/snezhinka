@@ -1,4 +1,4 @@
-from landing.models import ExtendedFlatPage
+from landing.models import ExtendedFlatPage, TitleTag
 from contacts.models import Phone
 from feedback.forms import CallBackForm
 from products.models import ProductType
@@ -21,12 +21,15 @@ def header_info(request):
 
     product_types = ProductType.objects.all()
 
+    seo_titles = TitleTag.objects.all()
+
     context = {
         'main_points': main_points,
         'drop_points': drop_points,
         'phone': phone,
         'callback_form': callback_form,
         'main_product_types': product_types,
+        'seo_titles': seo_titles
     }
 
     return context

@@ -14,7 +14,7 @@
         </ol>
         <h1 class="h2 m-0 mb-5 font-weight-normal">Новости</h1>
         <div class="row">
-            {% for item in news %}
+            {% for item in page_object.object_list %}
                 <div class="col-lg-6">
                     <div class="newsfeed-item mb-5">
                         <img src="{{ item.image.url|resize:'news_resize' }}" class="w-100 mb-3" alt="">
@@ -25,20 +25,6 @@
                 </div>
             {% endfor %}
         </div>
-        <nav class="pb-5">
-            <ul class="pagination justify-content-center pagination-sm">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#"><i class="fas fa-angle-left"></i></a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
-                </li>
-            </ul>
-        </nav>
+        {% include '__pagination.html' %}
     </div>
 {% endblock content %}
